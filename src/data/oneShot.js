@@ -1,4 +1,4 @@
-export const oneshotUrl = "ec2-18-181-196-62.ap-northeast-1.compute.amazonaws.com:5000/api/v1/cp-test-data/oneshot"
+export const oneshotUrl = "http://localhost:5000/api/v1/cp-test-data/oneshot"
 export var data = []
 
 export function getPlayerData(PlayerDataReceivedCallback) {
