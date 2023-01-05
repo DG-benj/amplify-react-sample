@@ -1,5 +1,5 @@
 export var data = []
-export const profileUrl = "http://localhost:5000/api/v1/cp-test-data/profile"
+export const profileUrl = "http://ec2-13-231-220-57.ap-northeast-1.compute.amazonaws.com:5000/api/v1/cp-test-data/profile"
 export var count = 0
 
 export function getPlayerData(PlayerDataReceivedCallback) {

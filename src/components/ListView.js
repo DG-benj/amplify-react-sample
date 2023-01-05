@@ -11,7 +11,7 @@ export default function ListView({data, handleOnChange}) {
     }
     // console.table(data)
     for(let i = 0; i < data.length; i++) {
-      options.push(<option key={`${i}`}>{`Player [${""}]`}</option>)
+      options.push(<option value={i} key={`${i}`}>{`Player [${""}]`}</option>)
     }
     return options
   }

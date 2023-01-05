@@ -42,10 +42,10 @@ export default function OneShotPanel() {
         let xhrReqs =[]
 
         if(!isButtonClicked(inButton)) {
-            const index  = listValue[listValue.length-1]
+            const index  = listValue;
             console.log(index)
-            console.log(options[index-1][listValue])
-            var payload = JSON.stringify(options[index-1][listValue])
+            console.log(options[index]["Player"])
+            var payload = JSON.stringify(options[index]["Player"])
 
             payload = payload.slice(1, payload.length-1)
             xhrReqs.push(PayloadHandler.setPayload("1Shot", payload))
