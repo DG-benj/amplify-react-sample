@@ -1,4 +1,40 @@
-export const oneshotUrl = "https://ec2-13-231-220-57.ap-northeast-1.compute.amazonaws.com:5000/api/v1/cp-test-data/oneshot"
+// import https from "https"
+
+export const oneshotUrl = "https://ec2-13-231-220-57.ap-northeast-1.compute.amazonaws.com:5000"
+
+// const GET = {
+//     hostname: oneshotUrl,
+//     port: "443",
+//     path: "/api/v1/cp-test-data/oneshot/",
+//     method: "GET",
+//     headers: {
+//         'Accept': 'application/json'
+//     }
+// }
+
+// export function GETrequest(apiCall) {
+//     console.log("test")
+//     GET.path = `/api/v1/cp-test-data/oneshot/${apiCall}`
+//     var req = https.request(GET, (res) =>{
+//         console.log(`statusCode: ${res.statusCode}`)
+
+//         let data = '';
+//         res.on('data', (chunk) => {
+//             data += chunk;
+//         })
+
+//         res.on('end', () => {
+//             const responseJson = JSON.parse(data);
+//             console.log(responseJson);
+//         })
+//     })
+
+//     console.log(req);
+//     req.on('error', (error) => {
+//         console.error(error);
+//     })
+// }
+
 export var data = []
 
 export function getPlayerData(PlayerDataReceivedCallback) {
@@ -13,6 +49,8 @@ export function getPlayerData(PlayerDataReceivedCallback) {
     }
     xhr.send()
 }
+
+
 //#region 
 
 // reference for GET req

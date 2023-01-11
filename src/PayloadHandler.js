@@ -1,5 +1,6 @@
 const url = "https://app.singular.live/apiv1/control/4y6FT8tm6X2bKsiQBWtZIN";
 
+
 export function createPayload(id, value) {
     return `"${id}": "${value}"`
 }

@@ -1,36 +1,35 @@
 import React, {createContext} from 'react';
-// import TodoList from './TodoList'
+import ControlPanel from './ControlPanel';
 
-import OneShotPanel from './panels/OneshotPanel'
-import ProfilePanel from './panels/ProfilePanel'
-import TamaPanel from './panels/TamaPanel'
-import DaitaisenPanel from './panels/DaitaisenPanel';
-import BSOPanel from './panels/BSOPanel'
-import DasekiPanel from './panels/DasekiPanel'
-
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-
+import logo from "./logo192.png";
+import "@aws-amplify/ui-react/styles.css";
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  Image,
+  View,
+  Card,
+} from "@aws-amplify/ui-react"
 
 export const InOutBtnContext = createContext(null);
 
-function App() {
+function App({signOut}) {
 
   return (
-   <Container fluid>
-    <Row>
-      <OneShotPanel/>
-      <ProfilePanel/>
-      <TamaPanel/>
-    </Row>
-    <Row>
-      <DaitaisenPanel/>
-      <BSOPanel/>
-      <DasekiPanel/>
-    </Row>
-   </Container>
+    <>
+      <Button onClick={signOut}>Sign Out</Button>
+      <ControlPanel/>
+    </>
+    // <View className="App">
+    //   <Card>
+    //     <Image src={logo} clasasName="App-logo" alt="logo"/>
+    //     <Heading level={1}>We now have Auth!</Heading>
+    //   </Card>
+    //   <Button onClick={signOut}>Sign Out</Button>
+    // </View>
   )
 
 }
 
-export default App;
+export default withAuthenticator(App);

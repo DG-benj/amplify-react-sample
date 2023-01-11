@@ -3,7 +3,7 @@ import InOutBtnGroup from "../components/InOutBtnGroup"
 import ListView from "../components/ListView"
 import EditButton from "../components/EditButton"
 
-import { getPlayerData} from '../data/oneShot'
+import { getPlayerData } from '../data/oneShot'
 
 import Col from 'react-bootstrap/Col';
 // import Row from 'react-bootstrap/Row';
