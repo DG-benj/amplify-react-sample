@@ -1,0 +1,14 @@
+{
+  "resourceName": "amplifyimagestorage",
+  "policyUUID": "376cd7b5",
+  "bucketName": "dig-sean-amplify-react-graphql",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
