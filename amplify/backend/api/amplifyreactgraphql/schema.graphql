@@ -1,5 +1,21 @@
-type Note @model @auth(rules: [ { allow: public } ] ){
+type Note @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
+  image: String
+}
+ 
+type Player @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  playerIndex: String!
+  oneshotNo: String
+  oneshotAge: String
+  oneshotHon: String
+  oneshotTen: String
+  oneshotTou: String
+  oneshotName: String
+  oneshotRitu1: String
+  oneshotRitu2: String
+  oneshotDajyun: String
+  oneshotPosition: String
 }
