@@ -1,6 +1,7 @@
 import React from 'react'
 
 import OneShotPanel from './panels/OneshotPanel'
+import DynamoDB_Sample from './panels/DynamoDB_Sample'
 import ProfilePanel from './panels/ProfilePanel'
 import TamaPanel from './panels/TamaPanel'
 import DaitaisenPanel from './panels/DaitaisenPanel';
@@ -9,6 +10,7 @@ import DasekiPanel from './panels/DasekiPanel'
 
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
+import DynamoDB_Sample from './panels/DynamoDB_Sample';
 
 export default function ControlPanel() {
   
@@ -23,6 +25,9 @@ export default function ControlPanel() {
             <DaitaisenPanel/>
             <BSOPanel/>
             <DasekiPanel/>
+          </Row>
+          <Row>
+            <DynamoDB_Sample/>
           </Row>
         </Container>
     )
