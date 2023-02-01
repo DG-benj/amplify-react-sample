@@ -10,7 +10,6 @@ import DasekiPanel from './panels/DasekiPanel'
 
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
-import DynamoDB_Sample from './panels/DynamoDB_Sample';
 
 export default function ControlPanel() {
   
