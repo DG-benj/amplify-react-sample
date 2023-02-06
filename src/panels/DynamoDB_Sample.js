@@ -10,7 +10,10 @@ import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 const AWS = require('aws-sdk');
-
+AWS.config.update({
+  accessKeyId:"AKIAUF6REDF777U7PECY",
+  secretAccessKey: "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",
+  region:'ap-northeast-1'});
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
@@ -79,8 +82,13 @@ export default function DynamoDB_Sample() {
     window.document.activeElement.blur()      
   }
 
-  var docClient = new AWS.DynamoDB();
   AWS.config.region = process.env.REGION;
+
+  var docClient = new AWS.DynamoDB({
+    region: 'ap-northeast-1'
+
+  });
+  docClient.config.region = process.env.REGION;
 
  
   var params = {
@@ -96,7 +104,7 @@ export default function DynamoDB_Sample() {
   var count = 0;
 
   function newGet(){
-    docClient.getItem({'TableName': "Voting_Time_Limit",
+    ddb.getItem({'TableName': "Voting_Time_Limit",
                               'Key':{
                                 "Data Sort": {"S": "Manual Trigger"}
                            }}, function(err, data){
@@ -129,7 +137,7 @@ if (err) {
           }
       }
   }
-  
+
   function onOutClick(inButton, outButton) {
     
     if(isButtonClicked(inButton)) {
