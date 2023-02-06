@@ -5,6 +5,7 @@ import CheckboxGroup from '../components/CheckboxGroup'
 import InputText from  '../components/InputText'
 import VertConnectedInput from '../components/VertConnectedInput'
 import LabeledCheckbox from '../components/LabeledCheckbox'
+import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
 
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
@@ -104,9 +105,11 @@ export default function DynamoDB_Sample() {
   var count = 0;
 
   function newGet(){
-    ddb.getItem({'TableName': "Voting_Time_Limit",
+    ddb.getItem({'TableName': "Website_PlayerData_Sample",
                               'Key':{
-                                "Data Sort": {"S": "Manual Trigger"}
+                                "PlayerID": {"N": "10001"},
+                                "PlayerName": {"S": "Benj"}
+                                
                            }}, function(err, data){
 if (err) {
             console.log(err, err.stack);
@@ -155,7 +158,7 @@ if (err) {
 
   return (
     <Col xs={2} className="control-panel">
-        <h5 className='txt-panel-label'>BSO</h5>
+        <h5 className='txt-panel-label'>DYNAMODB_SAMPLE</h5>
         {/*
         <CheckboxGroup 
           text="BALL" 
@@ -195,7 +198,6 @@ if (err) {
           inline="true"
           handleOnChange={(e) => setUraValue(e)}
         />
-  */}
 
         <InputText 
           text="回"
@@ -209,7 +211,8 @@ if (err) {
             onFirstTextChange={(e) =>  setUpValue(e)}
             onSecondTextChange={(e) => setDownValue(e)}
         />
-                
+  */
+      }
 
         {/* <CheckboxGroup text="STRIKE" count={2} spacing="6px"/>
         <CheckboxGroup text="OUT" count={2} spacing="26px"/>
@@ -218,7 +221,7 @@ if (err) {
         <LabeledCheckbox text="裏" inline="true"/>
         <InputText text="回"/>
         <VertConnectedInput firstText="UP" secondText="DOWN" mt={3}/>*/}
-        <InOutBtnGroup
+        <DynamoDB_BTN
             onInClick={(inButton, outButton) => onInClick(inButton, outButton)}
             onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}/> 
     </Col>
