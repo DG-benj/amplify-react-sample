@@ -33,8 +33,9 @@ export default function DynamoDB_Sample() {
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
+    newGet();
 
-    let xhrReqs = []
+    /*let xhrReqs = []
 
     if(!isButtonClicked(inButton)) {
       var payloads = []
@@ -73,10 +74,11 @@ export default function DynamoDB_Sample() {
     }
     xhrReqs.push(PayloadHandler.triggerAnimation("BSO", "Toggle"))
 
-    PayloadHandler.executeXHR(xhrReqs)
+    PayloadHandler.executeXHR(xhrReqs)*/
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
+
   var docClient = new AWS.DynamoDB();
   AWS.config.region = process.env.REGION;
 
@@ -127,6 +129,7 @@ if (err) {
           }
       }
   }
+  
   function onOutClick(inButton, outButton) {
     
     if(isButtonClicked(inButton)) {
@@ -145,6 +148,7 @@ if (err) {
   return (
     <Col xs={2} className="control-panel">
         <h5 className='txt-panel-label'>BSO</h5>
+        {/*
         <CheckboxGroup 
           text="BALL" 
           count={3} 
@@ -183,6 +187,7 @@ if (err) {
           inline="true"
           handleOnChange={(e) => setUraValue(e)}
         />
+  */}
 
         <InputText 
           text="回"
