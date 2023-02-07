@@ -12,8 +12,8 @@ import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 const AWS = require('aws-sdk');
 AWS.config.update({
-  accessKeyId:"",
-  secretAccessKey: "",
+  accessKeyId:"212313",
+  secretAccessKey: "123231312",
   region:'ap-northeast-1'});
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
