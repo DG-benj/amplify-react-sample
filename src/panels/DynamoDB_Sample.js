@@ -10,14 +10,12 @@ import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
+
+
+
 const AWS = require('aws-sdk');
-AWS.config.update({
-  accessKeyId:"212313",
-  secretAccessKey: "123231312",
-  region:'ap-northeast-1'});
-var sns = new AWS.SNS();
-var ddb = new AWS.DynamoDB();
-var ddb2 = process.env.getItem;
+var docClient = new AWS.DynamoDB.DocumentClient();
+
 
 export default function DynamoDB_Sample() {
 
@@ -37,8 +35,9 @@ export default function DynamoDB_Sample() {
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
-    newGet();
-
+    //listItems();
+    //npmnewGet();
+    GetItemsNow();
     /*let xhrReqs = []
 
     if(!isButtonClicked(inButton)) {
@@ -82,29 +81,81 @@ export default function DynamoDB_Sample() {
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
-
-  AWS.config.region = process.env.REGION;
-
-  var docClient = new AWS.DynamoDB({
-    region: 'ap-northeast-1'
-
-  });
-  docClient.config.region = process.env.REGION;
-
  
   var params = {
       TableName: "Website_PlayerData_Sample",
-      ExpressionAttributeNames: {
-          "#user_status": "user_status",
-      },
-      ExpressionAttributeValues: { ":user_status_val": 'somestatus' }
-  
+      Key: {
+          PlayerID: "10001"
+      }
   };
   
-  docClient.scan(params, onScan);
+  function GetItemsNow(){
+    docClient.get(params,onGet);
+  }
+
+  function onGet(err, data) {
+    if (err) {
+        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {        
+        console.log("Scan succeeded.");
+        data.Items.forEach(function(itemdata) {
+           console.log("Item :", ++count,JSON.stringify(itemdata));
+        });
+
+        // continue scanning if we have more items
+        if (typeof data.LastEvaluatedKey != "undefined") {
+            console.log("Scanning for more...");
+            params.ExclusiveStartKey = data.LastEvaluatedKey;
+            docClient.scan(params, onScan);
+        }
+    }
+}
+
+  /*async function getItem(){
+    try {
+      const data = await docClient.get(params).promise()
+      return data
+    } catch (err) {
+      return err
+    }
+  }
+  
+  exports.handler = async (event, context) => {
+    try {
+      const data = await getItem()
+      return { body: JSON.stringify(data) }
+    } catch (err) {
+      return { error: err }
+    }
+  }*/
+  const params1 = {
+    TableName : 'Website_PlayerData_Sample'
+  }
+  
+  /*async function listItems(){
+    try {
+      const data = await docClient.scan(params1).promise()
+      return data
+    } catch (err) {
+      return err
+    }
+  }
+  
+  exports.handler = async (event, context) => {
+    try {
+      const data = await listItems()
+      return { body: JSON.stringify(data) }
+    } catch (err) {
+      return { error: err }
+    }
+  }
+*/
+  function ScanItems(){
+    docClient.scan(params1, onScan);
+  }
   var count = 0;
 
-  function newGet(){
+ /* function newGet(){
     ddb.getItem({'TableName': "Website_PlayerData_Sample",
                               'Key':{
                                 "PlayerID": {"N": "10001"},
@@ -120,7 +171,7 @@ if (err) {
             
             };
   });
-  }
+  }*/
  
 
   function onScan(err, data) {
@@ -146,7 +197,8 @@ if (err) {
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    onScan();
+    ScanItems();
+    //getItem();
     //toggleButtonColor(outButton)
    // let xhrReqs = []
    // xhrReqs.push(PayloadHandler.triggerAnimation("BSO", "Out"))

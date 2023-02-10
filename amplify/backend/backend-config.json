@@ -48,7 +48,71 @@
       "service": "Cognito"
     }
   },
+  "parameters": {
+    "AMPLIFY_storage_WebsitePlayerDataSample_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    }
+  },
   "storage": {
+    "WebsitePlayerDataSample": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB",
+      "serviceType": "imported"
+    },
     "amplifyimagestorage": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",

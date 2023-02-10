@@ -16,7 +16,16 @@
         "amplifyreactgraphqldfffdb4a": {}
       },
       "storage": {
-        "amplifyimagestorage": {}
+        "amplifyimagestorage": {},
+        "WebsitePlayerDataSample": {
+          "tableName": "Website_PlayerData_Sample",
+          "region": "ap-northeast-1",
+          "arn": "arn:aws:dynamodb:ap-northeast-1:287664511359:table/Website_PlayerData_Sample",
+          "partitionKeyName": "PlayerID",
+          "partitionKeyType": "N",
+          "sortKeyName": "PlayerName",
+          "sortKeyType": "S"
+        }
       },
       "api": {
         "amplifyreactgraphql": {}
