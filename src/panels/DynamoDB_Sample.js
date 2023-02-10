@@ -35,8 +35,6 @@ export default function DynamoDB_Sample() {
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
-    //listItems();
-    //npmnewGet();
     GetItemsNow();
     /*let xhrReqs = []
 
