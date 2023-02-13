@@ -19,6 +19,10 @@ import {
   // Card,
 } from "@aws-amplify/ui-react"
 
+import { Amplify, Storage } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 import { 
   fetchTodos as fetch, 
   createTodo as crate,
