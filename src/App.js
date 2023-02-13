@@ -1,7 +1,6 @@
-/*import { Amplify } from 'aws-amplify';
-import config from './aws-exports';
-Amplify.configure(config);
-*/
+
+
+
 import React, { useState, useEffect, createContext} from 'react';
 import "./App.css"
 
@@ -19,9 +18,7 @@ import {
   // Card,
 } from "@aws-amplify/ui-react"
 
-import { Amplify, Storage } from 'aws-amplify';
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
+
 
 import { 
   fetchTodos as fetch, 
@@ -30,8 +27,13 @@ import {
 
 import ControlPanel from './ControlPanel';
 
+import { Amplify } from 'aws-amplify';
+import config from './aws-exports';
+Amplify.configure(config);
+
 export const InOutBtnContext = createContext(null);
 
+/*
 // const App = ({ signOut }) => {
 //   const [notes, setNotes] = useState([]);
 
@@ -121,7 +123,7 @@ export const InOutBtnContext = createContext(null);
 
 // export default withAuthenticator(App);
 
-
+*/
 
 function App({signOut}) {
 
