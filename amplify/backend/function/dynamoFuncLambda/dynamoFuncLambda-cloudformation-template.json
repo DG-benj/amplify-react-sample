@@ -16,9 +16,6 @@
     "s3Key": {
       "Type": "String"
     },
-    "dynamoFuncEnv": {
-      "Type": "String"
-    },
     "storageWebsitePlayerDataSampleName": {
       "Type": "String",
       "Default": "storageWebsitePlayerDataSampleName"
@@ -28,6 +25,9 @@
       "Default": "storageWebsitePlayerDataSampleArn"
     },
     "secretsPathAmplifyAppId": {
+      "Type": "String"
+    },
+    "dynamoFuncEnv": {
       "Type": "String"
     }
   },
@@ -84,9 +84,6 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "dynamoFuncENV": {
-              "Ref": "dynamoFuncEnv"
-            },
             "benjDynamoTest": {
               "Fn::Join": [
                 "",
@@ -108,6 +105,9 @@
                   "benjDynamoTest"
                 ]
               ]
+            },
+            "dynamoFuncENV": {
+              "Ref": "dynamoFuncEnv"
             }
           }
         },
