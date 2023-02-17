@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
+import { API } from 'aws-amplify';
 
 
 const AWS = require('aws-sdk');
@@ -79,7 +80,24 @@ export default function DynamoDB_Sample() {
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
+
+
+
  
+/*app.get("/dynamoFuncs", function (request, response) {
+  let params = {
+    TableName: tableName,
+    limit: 100
+  }
+  dynamodb.scan(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message });
+    } else {
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items) })
+    }
+  });
+});*/
+
   var params = {
       TableName: "Website_PlayerData_Sample",
       Key: {
@@ -195,7 +213,12 @@ if (err) {
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    ScanItems();
+    API.get('dynamoFunc', '/dynamoFuncs', {}).then(result => {
+      this.todos = JSON.parse(result.body);
+     }).catch(err => {
+      console.log(err);
+     })
+    //ScanItems();
     //getItem();
     //toggleButtonColor(outButton)
    // let xhrReqs = []

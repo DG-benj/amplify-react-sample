@@ -1,0 +1,12 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "dynamoFuncEnv",
+      "environmentVariableName": "dynamoFuncENV"
+    }
+  ],
+  "secretNames": [
+    "benjDynamoTest"
+  ]
+}

@@ -42,7 +42,8 @@
       "UnauthRoleName": "amplify-amplifyreactgraphql-envsample-162909-unauthRole",
       "StackName": "amplify-amplifyreactgraphql-envsample-162909",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:287664511359:stack/amplify-amplifyreactgraphql-envsample-162909/827c1ab0-ab78-11ed-a118-069391371655",
-      "AmplifyAppId": "d3ftoclg0kdv8l"
+      "AmplifyAppId": "d3ftoclg0kdv8l",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplifyreactgraphql-envsample-162909-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -61,7 +62,16 @@
         "amplifyimagestorage": {}
       },
       "api": {
-        "amplifyreactgraphql": {}
+        "amplifyreactgraphql": {},
+        "dynamoFunc": {}
+      },
+      "function": {
+        "dynamoFuncLambda": {
+          "dynamoFuncEnv": "dynamoFunction",
+          "secretsPathAmplifyAppId": "d3ftoclg0kdv8l",
+          "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
+          "s3Key": "amplify-builds/dynamoFuncLambda-314b426a4a543661452f-build.zip"
+        }
       }
     }
   }

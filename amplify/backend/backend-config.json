@@ -20,6 +20,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "dynamoFunc": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "dynamoFuncLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -48,7 +62,60 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "dynamoFuncLambda": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "parameters": {
+    "AMPLIFY_function_dynamoFuncLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoFuncLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_dynamoFuncLambda_dynamoFuncEnv": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoFuncLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_dynamoFuncLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoFuncLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_dynamoFuncLambda_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoFuncLambda"
+        }
+      ]
+    },
     "AMPLIFY_storage_WebsitePlayerDataSample_arn": {
       "usedBy": [
         {
