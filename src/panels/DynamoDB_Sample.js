@@ -127,67 +127,18 @@ export default function DynamoDB_Sample() {
     }
 }
 
-  /*async function getItem(){
-    try {
-      const data = await docClient.get(params).promise()
-      return data
-    } catch (err) {
-      return err
-    }
-  }
-  
-  exports.handler = async (event, context) => {
-    try {
-      const data = await getItem()
-      return { body: JSON.stringify(data) }
-    } catch (err) {
-      return { error: err }
-    }
-  }*/
+
   const params1 = {
     TableName : 'Website_PlayerData_Sample'
   }
   
-  /*async function listItems(){
-    try {
-      const data = await docClient.scan(params1).promise()
-      return data
-    } catch (err) {
-      return err
-    }
-  }
-  
-  exports.handler = async (event, context) => {
-    try {
-      const data = await listItems()
-      return { body: JSON.stringify(data) }
-    } catch (err) {
-      return { error: err }
-    }
-  }
-*/
+
   function ScanItems(){
     docClient.scan(params1, onScan);
   }
   var count = 0;
 
- /* function newGet(){
-    ddb.getItem({'TableName': "Website_PlayerData_Sample",
-                              'Key':{
-                                "PlayerID": {"N": "10001"},
-                                "PlayerName": {"S": "Benj"}
-                                
-                           }}, function(err, data){
-if (err) {
-            console.log(err, err.stack);
-        }else{
-            console.log(data);
-           
-   // res.send(data);
-            
-            };
-  });
-  }*/
+
  
 
   function onScan(err, data) {
@@ -213,17 +164,13 @@ if (err) {
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    API.get('dynamoFunc', '/dynamoFuncs', {}).then(result => {
+    API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
       this.todos = JSON.parse(result.body);
      }).catch(err => {
       console.log(err);
      })
     //ScanItems();
-    //getItem();
-    //toggleButtonColor(outButton)
-   // let xhrReqs = []
-   // xhrReqs.push(PayloadHandler.triggerAnimation("BSO", "Out"))
-   // PayloadHandler.executeXHR(xhrReqs)
+
     window.document.activeElement.blur()
   }    
 

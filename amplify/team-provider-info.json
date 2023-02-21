@@ -62,10 +62,15 @@
         "amplifyimagestorage": {}
       },
       "api": {
-        "amplifyreactgraphql": {}
+        "amplifyreactgraphql": {},
+        "dynamoAPI": {}
       },
       "function": {
-        "dynamoFuncLambda": {}
+        "dynamoFuncLambda": {},
+        "dynamoAPILambda": {
+          "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
+          "s3Key": "amplify-builds/dynamoAPILambda-5069345a307956586932-build.zip"
+        }
       }
     }
   }
