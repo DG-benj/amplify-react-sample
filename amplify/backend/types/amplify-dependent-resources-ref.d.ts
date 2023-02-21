@@ -17,15 +17,6 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolName": "string"
     }
   },
-  "function": {
-    "dynamoFuncLambda": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    }
-  },
   "storage": {
     "amplifyimagestorage": {
       "BucketName": "string",

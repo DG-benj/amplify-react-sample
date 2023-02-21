@@ -65,12 +65,7 @@
         "amplifyreactgraphql": {}
       },
       "function": {
-        "dynamoFuncLambda": {
-          "secretsPathAmplifyAppId": "d3ftoclg0kdv8l",
-          "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
-          "s3Key": "amplify-builds/dynamoFuncLambda-436d6a355a506b47596c-build.zip",
-          "dynamoFuncEnv": "dynamoFunction"
-        }
+        "dynamoFuncLambda": {}
       }
     }
   }
