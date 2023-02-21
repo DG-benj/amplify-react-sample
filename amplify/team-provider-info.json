@@ -69,7 +69,7 @@
         "dynamoFuncLambda": {},
         "dynamoAPILambda": {
           "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
-          "s3Key": "amplify-builds/dynamoAPILambda-5069345a307956586932-build.zip"
+          "s3Key": "amplify-builds/dynamoAPILambda-2b617731557256707854-build.zip"
         }
       }
     }
