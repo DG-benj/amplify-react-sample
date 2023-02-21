@@ -62,8 +62,7 @@
         "amplifyimagestorage": {}
       },
       "api": {
-        "amplifyreactgraphql": {},
-        "dynamoFunc": {}
+        "amplifyreactgraphql": {}
       },
       "function": {
         "dynamoFuncLambda": {
