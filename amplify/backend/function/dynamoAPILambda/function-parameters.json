@@ -1,3 +1,21 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "auth": {
+      "amplifyreactgraphqldfffdb4a": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "WebsitePlayerDataSample": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }

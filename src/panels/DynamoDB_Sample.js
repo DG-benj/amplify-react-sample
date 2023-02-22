@@ -14,9 +14,9 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 import { API } from 'aws-amplify';
 
 
-const AWS = require('aws-sdk');
-AWS.config.update({region: 'ap-northeast-1'});
-var docClient = new AWS.DynamoDB.DocumentClient();
+//const AWS = require('aws-sdk');
+//AWS.config.update({region: 'ap-northeast-1'});
+// docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function DynamoDB_Sample() {
 

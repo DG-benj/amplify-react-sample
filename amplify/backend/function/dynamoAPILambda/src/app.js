@@ -1,4 +1,11 @@
-y/*
+/* Amplify Params - DO NOT EDIT
+	AUTH_AMPLIFYREACTGRAPHQLDFFFDB4A_USERPOOLID
+	ENV
+	REGION
+	STORAGE_WEBSITEPLAYERDATASAMPLE_ARN
+	STORAGE_WEBSITEPLAYERDATASAMPLE_NAME
+	STORAGE_WEBSITEPLAYERDATASAMPLE_STREAMARN
+Amplify Params - DO NOT EDIT */y/*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
     http://aws.amazon.com/apache2.0/
