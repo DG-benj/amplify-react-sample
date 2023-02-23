@@ -36,7 +36,8 @@ export default function DynamoDB_Sample() {
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
-    GetItemsNow();
+  //  GetItemsNow();
+  GetItemById("10001");
     /*let xhrReqs = []
 
     if(!isButtonClicked(inButton)) {
@@ -105,7 +106,7 @@ export default function DynamoDB_Sample() {
       }
   };
   
-  function GetItemsNow(){
+ /* function GetItemsNow(){
     docClient.get(params,onGet);
   }
 
@@ -158,17 +159,30 @@ export default function DynamoDB_Sample() {
           }
       }
   }
+*/
+
+function ScanAllItems(){
+  API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
+    this.dynamoAPIs = JSON.parse(result.body);
+   }).catch(err => {
+    console.log(err);
+   })
+}
+
+function GetItemById(toFindID){
+  API.get('dynamoAPI', `/dynamoAPIs/${toFindID}`, {}).then((result) => {
+    this.dynamoAPIs = JSON.parse(result.body);
+  }).catch(err => {
+    console.log(err);
+  })
+}
 
   function onOutClick(inButton, outButton) {
     
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
-      this.todos = JSON.parse(result.body);
-     }).catch(err => {
-      console.log(err);
-     })
+    ScanAllItems();
     //ScanItems();
 
     window.document.activeElement.blur()

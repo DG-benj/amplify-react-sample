@@ -51,6 +51,7 @@ const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
 var express = require('express')
+
 const { v4: uuidv4 } = require('uuid')
 AWS.config.update({ region: process.env.TABLE_REGION });
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -88,16 +89,36 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
+//SAMPLES
 app.get("/dynamoAPIs", function (request, response) {
   let params = {
     TableName: tableName,
     limit: 100
   }
+  console.log(request);
   dynamodb.scan(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message });
     } else {
       response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items) })
+    }
+  });
+});
+
+app.get("/dynamoAPIs/:id", function (request, response) {
+  let params = {
+    TableName: tableName,
+    Key: {
+      id: request.params.id
+    }
+  }
+  console.log(request);
+
+  dynamodb.get(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message });
+    } else {
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Item) })
     }
   });
 });
@@ -269,7 +290,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 
-app.listen(3000, function() {
+app.listen(any, function() {
   console.log("App started")
 });
 
