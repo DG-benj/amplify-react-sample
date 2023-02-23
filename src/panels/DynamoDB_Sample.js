@@ -162,7 +162,10 @@ export default function DynamoDB_Sample() {
 */
 
 function ScanAllItems(){
+  console.log("Calling scan");
+
   API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
+    console.log("Calling scan1");
     this.dynamoAPIs = JSON.parse(result.body);
    }).catch(err => {
     console.log(err);
@@ -170,6 +173,7 @@ function ScanAllItems(){
 }
 
 function GetItemById(toFindID){
+  console.log("Calling get");
   API.get('dynamoAPI', `/dynamoAPIs/${toFindID}`, {}).then((result) => {
     this.dynamoAPIs = JSON.parse(result.body);
   }).catch(err => {
