@@ -82,23 +82,6 @@ export default function DynamoDB_Sample() {
     window.document.activeElement.blur()      
   }
 
-
-
- 
-/*app.get("/dynamoFuncs", function (request, response) {
-  let params = {
-    TableName: tableName,
-    limit: 100
-  }
-  dynamodb.scan(params, (error, result) => {
-    if (error) {
-      response.json({ statusCode: 500, error: error.message });
-    } else {
-      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items) })
-    }
-  });
-});*/
-
   var params = {
       TableName: "Website_PlayerData_Sample",
       Key: {
@@ -166,7 +149,7 @@ function ScanAllItems(){
 
   API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
     console.log("Calling scan1");
-    this.dynamoAPIs = JSON.parse(result.body);
+    this.dynamoAPI = JSON.parse(result.body);
    }).catch(err => {
     console.log(err);
    })
@@ -174,7 +157,7 @@ function ScanAllItems(){
 
 function GetItemById(toFindID){
   console.log("Calling get");
-  API.get('dynamoAPI', `/dynamoAPIs/${toFindID}`, {}).then((result) => {
+  API.get('dynamoAPI', '/dynamoAPIs/'+'PlayerID' + '{' + toFindID +'}', {}).then((result) => {
     this.dynamoAPIs = JSON.parse(result.body);
   }).catch(err => {
     console.log(err);

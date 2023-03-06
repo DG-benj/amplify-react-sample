@@ -57,12 +57,12 @@
           "partitionKeyName": "PlayerID",
           "partitionKeyType": "N",
           "sortKeyName": "PlayerName",
-          "sortKeyType": "S"
+          "sortKeyType": "S",
+          "streamArn": "arn:aws:dynamodb:ap-northeast-1:287664511359:table/Website_PlayerData_Sample/stream/2023-03-02T08:20:35.555"
         },
         "amplifyimagestorage": {}
       },
       "api": {
-        "amplifyreactgraphql": {},
         "dynamoAPI": {}
       },
       "function": {

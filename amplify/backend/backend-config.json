@@ -67,17 +67,13 @@
       "build": true,
       "dependsOn": [
         {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "amplifyreactgraphqldfffdb4a"
-        },
-        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
           "attributes": [
             "Name",
-            "Arn",
-            "StreamArn"
+            "Arn"
           ],
           "category": "storage",
           "resourceName": "WebsitePlayerDataSample"
@@ -85,6 +81,88 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_dynamoAPILambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoAPILambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_dynamoAPILambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "dynamoAPILambda"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_streamArn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
+    },
+    "AMPLIFY_storage_WebsitePlayerDataSample_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ]
     }
   },
   "storage": {
