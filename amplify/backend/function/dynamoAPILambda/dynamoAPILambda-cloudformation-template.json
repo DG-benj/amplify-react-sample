@@ -23,6 +23,38 @@
     "storageWebsitePlayerDataSampleArn": {
       "Type": "String",
       "Default": "storageWebsitePlayerDataSampleArn"
+    },
+    "apidynamoAPIApiName": {
+      "Type": "String",
+      "Default": "apidynamoAPIApiName"
+    },
+    "apidynamoAPIApiId": {
+      "Type": "String",
+      "Default": "apidynamoAPIApiId"
+    },
+    "authamplifyreactgraphqldfffdb4aUserPoolId": {
+      "Type": "String",
+      "Default": "authamplifyreactgraphqldfffdb4aUserPoolId"
+    },
+    "storageWebsitePlayerDataSampleStreamArn": {
+      "Type": "String",
+      "Default": "storageWebsitePlayerDataSampleStreamArn"
+    },
+    "storageamplifyimagestorageBucketName": {
+      "Type": "String",
+      "Default": "storageamplifyimagestorageBucketName"
+    },
+    "apiamplifyreactgraphqlGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiamplifyreactgraphqlGraphQLAPIIdOutput"
+    },
+    "apiamplifyreactgraphqlGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apiamplifyreactgraphqlGraphQLAPIEndpointOutput"
+    },
+    "apiamplifyreactgraphqlGraphQLAPIKeyOutput": {
+      "Type": "String",
+      "Default": "apiamplifyreactgraphqlGraphQLAPIKeyOutput"
     }
   },
   "Conditions": {
@@ -77,6 +109,88 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "API_DYNAMOAPI_APINAME": {
+              "Ref": "apidynamoAPIApiName"
+            },
+            "API_DYNAMOAPI_APIID": {
+              "Ref": "apidynamoAPIApiId"
+            },
+            "AUTH_AMPLIFYREACTGRAPHQLDFFFDB4A_USERPOOLID": {
+              "Ref": "authamplifyreactgraphqldfffdb4aUserPoolId"
+            },
+            "STORAGE_WEBSITEPLAYERDATASAMPLE_NAME": {
+              "Ref": "storageWebsitePlayerDataSampleName"
+            },
+            "STORAGE_WEBSITEPLAYERDATASAMPLE_ARN": {
+              "Ref": "storageWebsitePlayerDataSampleArn"
+            },
+            "STORAGE_WEBSITEPLAYERDATASAMPLE_STREAMARN": {
+              "Ref": "storageWebsitePlayerDataSampleStreamArn"
+            },
+            "STORAGE_AMPLIFYIMAGESTORAGE_BUCKETNAME": {
+              "Ref": "storageamplifyimagestorageBucketName"
+            },
+            "API_AMPLIFYREACTGRAPHQL_NOTETABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiamplifyreactgraphqlGraphQLAPIIdOutput}:GetAtt:NoteTable:Name"
+              }
+            },
+            "API_AMPLIFYREACTGRAPHQL_NOTETABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiamplifyreactgraphqlGraphQLAPIIdOutput}:GetAtt:NoteTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_AMPLIFYREACTGRAPHQL_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apiamplifyreactgraphqlGraphQLAPIIdOutput"
+            },
+            "API_AMPLIFYREACTGRAPHQL_PLAYERTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiamplifyreactgraphqlGraphQLAPIIdOutput}:GetAtt:PlayerTable:Name"
+              }
+            },
+            "API_AMPLIFYREACTGRAPHQL_PLAYERTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiamplifyreactgraphqlGraphQLAPIIdOutput}:GetAtt:PlayerTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_AMPLIFYREACTGRAPHQL_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apiamplifyreactgraphqlGraphQLAPIEndpointOutput"
+            },
+            "API_AMPLIFYREACTGRAPHQL_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apiamplifyreactgraphqlGraphQLAPIKeyOutput"
             }
           }
         },
@@ -192,6 +306,55 @@
                         "Ref": "storageWebsitePlayerDataSampleArn"
                       },
                       "index/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "apigateway:POST",
+                "apigateway:PUT",
+                "apigateway:GET",
+                "apigateway:HEAD",
+                "apigateway:OPTIONS",
+                "apigateway:PATCH",
+                "apigateway:DELETE"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "::/restapis/",
+                      {
+                        "Ref": "apidynamoAPIApiName"
+                      },
+                      "/*"
                     ]
                   ]
                 }

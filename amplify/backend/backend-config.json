@@ -1,26 +1,5 @@
 {
   "api": {
-    "amplifyreactgraphql": {
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ],
-          "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
-            },
-            "authenticationType": "API_KEY"
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    },
     "dynamoAPI": {
       "dependsOn": [
         {
@@ -65,104 +44,9 @@
   "function": {
     "dynamoAPILambda": {
       "build": true,
-      "dependsOn": [
-        {
-          "attributeEnvMap": {
-            "Arn": "TABLE_ARN",
-            "Name": "TABLE_NAME"
-          },
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ],
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_dynamoAPILambda_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dynamoAPILambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_dynamoAPILambda_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "dynamoAPILambda"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_arn": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_partitionKeyType": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_region": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_sortKeyType": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_streamArn": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
-    },
-    "AMPLIFY_storage_WebsitePlayerDataSample_tableName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "WebsitePlayerDataSample"
-        }
-      ]
     }
   },
   "storage": {
