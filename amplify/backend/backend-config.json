@@ -1,5 +1,19 @@
 {
   "api": {
+    "NewDynamoDB": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "NewDynamoDBLambdaFunc"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "amplifyreactgraphql": {
       "dependsOn": [],
       "output": {
@@ -63,6 +77,22 @@
     }
   },
   "function": {
+    "NewDynamoDBLambdaFunc": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "WebsitePlayerDataSample"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "dynamoAPILambda": {
       "build": true,
       "dependsOn": [
@@ -84,6 +114,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_NewDynamoDBLambdaFunc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NewDynamoDBLambdaFunc"
+        }
+      ]
+    },
+    "AMPLIFY_function_NewDynamoDBLambdaFunc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "NewDynamoDBLambdaFunc"
+        }
+      ]
+    },
     "AMPLIFY_function_dynamoAPILambda_deploymentBucketName": {
       "usedBy": [
         {

@@ -63,13 +63,19 @@
         "amplifyimagestorage": {}
       },
       "api": {
-        "dynamoAPI": {}
+        "dynamoAPI": {},
+        "amplifyreactgraphql": {},
+        "NewDynamoDB": {}
       },
       "function": {
         "dynamoFuncLambda": {},
         "dynamoAPILambda": {
           "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
           "s3Key": "amplify-builds/dynamoAPILambda-2b617731557256707854-build.zip"
+        },
+        "NewDynamoDBLambdaFunc": {
+          "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
+          "s3Key": "amplify-builds/NewDynamoDBLambdaFunc-6556594449556f5a5257-build.zip"
         }
       }
     }

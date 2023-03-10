@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "storage": {
+      "WebsitePlayerDataSample": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

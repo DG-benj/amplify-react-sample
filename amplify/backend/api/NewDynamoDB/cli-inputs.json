@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "paths": {
+    "/NewDynamoDBAPI": {
+      "name": "/NewDynamoDBAPI",
+      "lambdaFunction": "NewDynamoDBLambdaFunc",
+      "permissions": {
+        "setting": "protected",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ],
+        "guest": [
+          "read"
+        ]
+      }
+    }
+  }
+}
