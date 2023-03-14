@@ -40,6 +40,7 @@ app.use(awsServerlessExpressMiddleware.eventContext())
 
 
 */
+
 const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
@@ -47,7 +48,7 @@ var express = require('express')
 const { v4: uuidv4 } = require('uuid')
 AWS.config.update({ region: process.env.TABLE_REGION });
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-let tableName = "WebsitePlayerDataSample";
+let tableName = "Website_PlayerData_Sample";
 if (process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
