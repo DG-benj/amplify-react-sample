@@ -64,14 +64,14 @@
       },
       "api": {
         "dynamoAPI": {},
-        "amplifyreactgraphql": {},
-        "NewDynamoDB": {}
+        "NewDynamoDB": {},
+        "GraphQLAmplifyDynamo": {}
       },
       "function": {
         "dynamoFuncLambda": {},
         "dynamoAPILambda": {
           "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",
-          "s3Key": "amplify-builds/dynamoAPILambda-2b617731557256707854-build.zip"
+          "s3Key": "amplify-builds/dynamoAPILambda-384c534f39756d7a4769-build.zip"
         },
         "NewDynamoDBLambdaFunc": {
           "deploymentBucketName": "amplify-amplifyreactgraphql-envsample-162909-deployment",

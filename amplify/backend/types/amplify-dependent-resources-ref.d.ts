@@ -1,14 +1,14 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
+    "GraphQLAmplifyDynamo": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    },
     "NewDynamoDB": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
-    },
-    "amplifyreactgraphql": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
     },
     "dynamoAPI": {
       "ApiId": "string",

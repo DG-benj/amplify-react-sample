@@ -88,8 +88,10 @@ app.get("/dynamoAPIs", function (request, response) {
   }
   dynamodb.scan(params, (error, result) => {
     if (error) {
+      console.log("error on normal");
       response.json({ statusCode: 500, error: error.message });
     } else {
+      console.log("goes on normal");
       response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items) })
     }
   });
