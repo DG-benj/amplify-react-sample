@@ -148,8 +148,7 @@ function ScanAllItems(){
   console.log("Calling scan");
 
   API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
-    console.log("Calling scan1");
-    this.dynamoAPI = JSON.parse(result.body);
+    this.dynamoAPIs = JSON.parse(result.body);
    }).catch(err => {
     console.log(err);
    })
@@ -157,7 +156,7 @@ function ScanAllItems(){
 
 function GetItemById(toFindID){
   console.log("Calling get");
-  API.get('dynamoAPI', '/dynamoAPIs/'+'PlayerID' + '{' + toFindID +'}', {}).then((result) => {
+  API.get('dynamoAPI', '/dynamoAPIs/'+'${PlayerID}' + '{' + toFindID +'}', {}).then((result) => {
     this.dynamoAPIs = JSON.parse(result.body);
   }).catch(err => {
     console.log(err);
