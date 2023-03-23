@@ -15,9 +15,9 @@ import { Amplify,API } from 'aws-amplify';
 //import awsconfig  from './aws-exports';
 //Amplify.configure(awsconfig);
 
-//const AWS = require('aws-sdk');
-//AWS.config.update({region: 'ap-northeast-1'});
-// docClient = new AWS.DynamoDB.DocumentClient();
+const AWS = require('aws-sdk');
+AWS.config.update({region: 'ap-northeast-1'});
+docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function DynamoDB_Sample() {
 
@@ -37,7 +37,7 @@ export default function DynamoDB_Sample() {
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
-  //  GetItemsNow();
+   GetItemsNow();
   GetItemById("10001");
     /*let xhrReqs = []
 
@@ -90,7 +90,7 @@ export default function DynamoDB_Sample() {
       }
   };
   
- /* function GetItemsNow(){
+  function GetItemsNow(){
     docClient.get(params,onGet);
   }
 
@@ -143,7 +143,7 @@ export default function DynamoDB_Sample() {
           }
       }
   }
-*/
+
 
 API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
   this.dynamoAPIs = JSON.parse(result.body);
@@ -172,7 +172,7 @@ function GetItemById(toFindID){
       toggleButtonColor(inButton)
     }
     ScanAllItems();
-    //ScanItems();
+    ScanItems();
 
     window.document.activeElement.blur()
   }    
