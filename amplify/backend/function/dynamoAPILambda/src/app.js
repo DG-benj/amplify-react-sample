@@ -92,6 +92,17 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
+app.get('/dynamoAPIs', function(req, res) {
+  const query = req.query;
+  // or
+  // const query = req.apiGateway.event.queryStringParameters
+  res.json({
+    event: req.apiGateway.event, // to view all event data
+    query: query
+  });
+});
+
+
 app.get("/dynamoAPIs", function (request, response) {
   let params = {
     TableName: tableName,
@@ -110,7 +121,7 @@ app.get("/dynamoAPIs", function (request, response) {
 
 
 
-
+/*
 app.get(path + hashKeyPath, function(req, res) {
   const condition = {}
   condition[partitionKeyName] = {
@@ -142,11 +153,11 @@ app.get(path + hashKeyPath, function(req, res) {
     }
   });
 });
-
+*/
 /*****************************************
  * HTTP Get method for get single object *
  *****************************************/
-
+/*
 app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   const params = {};
   if (userIdPresent && req.apiGateway) {
@@ -188,7 +199,7 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 
-
+*/
 /************************************
 * HTTP put method for insert object *
 *************************************/

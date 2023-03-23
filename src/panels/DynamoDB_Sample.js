@@ -11,8 +11,9 @@ import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
-import { API } from 'aws-amplify';
-
+import { Amplify,API } from 'aws-amplify';
+import awsconfig  from './aws-exports';
+Amplify.configure(awsconfig);
 
 //const AWS = require('aws-sdk');
 //AWS.config.update({region: 'ap-northeast-1'});
@@ -144,14 +145,16 @@ export default function DynamoDB_Sample() {
   }
 */
 
+API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
+  this.dynamoAPIs = JSON.parse(result.body);
+ }).catch(err => {
+  console.log(err);
+ })
+
 function ScanAllItems(){
   console.log("Calling scan");
 
-  API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
-    this.dynamoAPIs = JSON.parse(result.body);
-   }).catch(err => {
-    console.log(err);
-   })
+  API.get('dynamoAPI', '/dynamoAPIs');
 }
 
 function GetItemById(toFindID){
