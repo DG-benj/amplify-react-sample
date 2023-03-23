@@ -12,8 +12,8 @@ import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API } from 'aws-amplify';
-import awsconfig  from './aws-exports';
-Amplify.configure(awsconfig);
+//import awsconfig  from './aws-exports';
+//Amplify.configure(awsconfig);
 
 //const AWS = require('aws-sdk');
 //AWS.config.update({region: 'ap-northeast-1'});
