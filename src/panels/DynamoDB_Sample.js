@@ -17,7 +17,7 @@ import { Amplify,API } from 'aws-amplify';
 
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'ap-northeast-1'});
-docClient = new AWS.DynamoDB.DocumentClient();
+var docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function DynamoDB_Sample() {
 
