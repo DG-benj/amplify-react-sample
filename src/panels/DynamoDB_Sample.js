@@ -11,7 +11,7 @@ import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
-import { Amplify,API } from 'aws-amplify';
+import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
 ///import credentials from '../aws/credentials';
 
@@ -22,6 +22,10 @@ AWS.config.update({region: 'ap-northeast-1',
                   accessKeyId: awsconfig.aws_appsync_apiKey,
                   accessSecretKey: awsconfig.aws});
 var docClient = new AWS.DynamoDB.DocumentClient();
+
+const crendentials = await Auth.currentCredentials();
+const creds = await Auth.essentialCredentials(crendentials);
+AWS.config.crendentials = new AWS.crendentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
 
 export default function DynamoDB_Sample() {
 
@@ -175,7 +179,7 @@ function GetItemById(toFindID){
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    getPlayerData();  
+
     ScanAllItems();
     ScanItems();
 
