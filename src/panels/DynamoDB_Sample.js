@@ -23,8 +23,6 @@ AWS.config.update({region: 'ap-northeast-1',
                   accessSecretKey: awsconfig.aws});
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-
-
 export default function DynamoDB_Sample() {
 
   const [ballValues, setBallValues] = useState([])
