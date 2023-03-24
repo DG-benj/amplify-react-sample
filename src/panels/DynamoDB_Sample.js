@@ -13,7 +13,7 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
-import credentials from '../aws/credentials';
+///import credentials from '../aws/credentials';
 
 //Amplify.configure(awsconfig);
 
@@ -187,7 +187,7 @@ function GetItemById(toFindID){
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-    getPlayerData();
+    getPlayerData();  
     ScanAllItems();
     ScanItems();
 
