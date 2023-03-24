@@ -4,7 +4,11 @@ module.exports = {
             "fs": require.resolve("file-system")
         }
     },
-    experiments: {
-        topLevelAwait: true
-      }
+    webpack: {
+        configure: {
+          experiments: {
+            topLevelAwait: true,
+          },
+        },
+      },
 }
