@@ -12,7 +12,9 @@ import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API } from 'aws-amplify';
-//import awsconfig  from './aws-exports';
+import awsconfig  from '../aws-exports';
+import credentials from '../aws/credentials';
+
 //Amplify.configure(awsconfig);
 
 const AWS = require('aws-sdk');
@@ -89,6 +91,20 @@ export default function DynamoDB_Sample() {
           PlayerID: "10001"
       }
   };
+
+  
+ function getPlayerData(PlayerDataReceivedCallback) {
+  var xhr = new XMLHttpRequest()
+
+  xhr.open("GET", awsconfig.aws_cloud_logic_custom[0].endpoint + "")
+  
+  xhr.onload = (e) => {
+      data = JSON.parse(xhr.responseText)['PlayerData']
+      PlayerDataReceivedCallback(data)
+      // console.log(data)
+  }
+  xhr.send()
+}
   
   function GetItemsNow(){
     docClient.get(params,onGet);
@@ -171,6 +187,7 @@ function GetItemById(toFindID){
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
+    getPlayerData();
     ScanAllItems();
     ScanItems();
 
