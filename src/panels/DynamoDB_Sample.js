@@ -36,11 +36,13 @@ export default function DynamoDB_Sample() {
   
   const crendentials = Auth.currentCredentials();
   const creds = Auth.essentialCredentials(crendentials);
+  
   AWS.config.credentials = new AWS.Credentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: creds.accessKeyId,
                       accessSecretKey: creds.secretAccessKey});
 var docClient = new AWS.DynamoDB();
+docClient.config.region = process.env.REGION;
 
   function onInClick(inButton, outButton) {
 
@@ -128,7 +130,7 @@ var docClient = new AWS.DynamoDB();
     
 
   }
-  
+
 
   function ScanItems(){
     docClient.scan(params1, onScan);
