@@ -18,7 +18,9 @@ import awsconfig  from '../aws-exports';
 //Amplify.configure(awsconfig);
 
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'ap-northeast-1'});
+AWS.config.update({region: 'ap-northeast-1',
+                  accessKeyId: awsconfig.aws_appsync_apiKey,
+                  accessSecretKey: awsconfig.aws});
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 export default function DynamoDB_Sample() {
@@ -92,20 +94,6 @@ export default function DynamoDB_Sample() {
       }
   };
 
-  
- function getPlayerData(PlayerDataReceivedCallback) {
-  var xhr = new XMLHttpRequest()
-
-  xhr.open("GET", awsconfig.aws_cloud_logic_custom[0].endpoint + "")
-  
-  xhr.onload = (e) => {
-      data = JSON.parse(xhr.responseText)['PlayerData']
-      PlayerDataReceivedCallback(data)
-      // console.log(data)
-  }
-  xhr.send()
-}
-  
   function GetItemsNow(){
     docClient.get(params,onGet);
   }
