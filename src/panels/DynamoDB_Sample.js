@@ -23,9 +23,7 @@ AWS.config.update({region: 'ap-northeast-1',
                   accessSecretKey: awsconfig.aws});
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-const crendentials = await Auth.currentCredentials();
-const creds = await Auth.essentialCredentials(crendentials);
-AWS.config.crendentials = new AWS.crendentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
+
 
 export default function DynamoDB_Sample() {
 
@@ -38,7 +36,10 @@ export default function DynamoDB_Sample() {
   const [kaiValue, setKaiValue] = useState(null)
   const [upValue, setUpValue] = useState(null)
   const [downValue, setDownValue] = useState(null)
-
+  
+  const crendentials = Auth.currentCredentials();
+  const creds = Auth.essentialCredentials(crendentials);
+  AWS.config.crendentials = new AWS.crendentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
   
   function onInClick(inButton, outButton) {
 
