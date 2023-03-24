@@ -42,7 +42,7 @@ export default function DynamoDB_Sample() {
                      accessKeyId: creds.accessKeyId,
                       accessSecretKey: creds.secretAccessKey});
 var docClient = new AWS.DynamoDB();
-docClient.config.region = process.env.REGION;
+docClient.config.region ="ap-northeast-1";
 
   function onInClick(inButton, outButton) {
 
