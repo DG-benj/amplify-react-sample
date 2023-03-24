@@ -3,5 +3,8 @@ module.exports = {
         fallback: {
             "fs": require.resolve("file-system")
         }
-    }
+    },
+    experiments: {
+        topLevelAwait: true
+      }
 }
