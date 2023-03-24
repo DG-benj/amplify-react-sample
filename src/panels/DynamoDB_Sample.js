@@ -37,7 +37,7 @@ export default function DynamoDB_Sample() {
   
   const crendentials = Auth.currentCredentials();
   const creds = Auth.essentialCredentials(crendentials);
-  AWS.config.crendentials = new AWS.crendentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
+  AWS.config.crendentials = new AWS.Crendentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
   
   function onInClick(inButton, outButton) {
 
