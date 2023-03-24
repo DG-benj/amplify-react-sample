@@ -18,10 +18,9 @@ import awsconfig  from '../aws-exports';
 //Amplify.configure(awsconfig);
 
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'ap-northeast-1',
-                  accessKeyId: awsconfig.aws_appsync_apiKey,
-                  accessSecretKey: awsconfig.aws});
-var docClient = new AWS.DynamoDB.DocumentClient();
+var sns = new AWS.SNS();
+var ddb = new AWS.DynamoDB();
+var ddb2 = process.env.getItem;
 
 export default function DynamoDB_Sample() {
 
@@ -41,6 +40,7 @@ export default function DynamoDB_Sample() {
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: creds.accessKeyId,
                       accessSecretKey: creds.secretAccessKey});
+var docClient = new AWS.DynamoDB();
 
   function onInClick(inButton, outButton) {
 
@@ -124,7 +124,9 @@ export default function DynamoDB_Sample() {
 
 
   const params1 = {
-    TableName : 'Website_PlayerData_Sample'
+    TableName :"Website_PlayerData_Sample",
+    
+
   }
   
 
