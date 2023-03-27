@@ -140,6 +140,7 @@ docClient.config.region ="ap-northeast-1";
   function onScan(err, data) {
       if (err) {
           console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+          console.log(error);
       } else {        
           console.log("Scan succeeded.");
           data.Items.forEach(function(itemdata) {
