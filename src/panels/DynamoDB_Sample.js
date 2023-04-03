@@ -13,11 +13,13 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
+import { DynamoDB } from 'aws-sdk'
 ///import credentials from '../aws/credentials';
 
 //Amplify.configure(awsconfig);
 
 const AWS = require('aws-sdk');
+const AWS2 = require('aws-sdk');
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
@@ -44,6 +46,14 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB();
 docClient.config.region ="ap-northeast-1";
 
+const dynamo2 = new DynamoDB({
+    region:'ap-northeast-1',
+    credentials:{
+        accessKeyId: process.env.ACCESS_KEY,
+        secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    }
+});
+
   function onInClick(inButton, outButton) {
 
     if(isButtonClicked(outButton)) {
@@ -51,6 +61,7 @@ docClient.config.region ="ap-northeast-1";
     }
    GetItemsNow();
   GetItemById("10001");
+  newGetDynamo();
     /*let xhrReqs = []
 
     if(!isButtonClicked(inButton)) {
@@ -102,10 +113,35 @@ docClient.config.region ="ap-northeast-1";
       }
   };
 
+ /* const resp = await client.send(
+    new PutRecordsCommand({
+        Records: [
+            {
+                Data: Buffer.from(
+                    JSON.stringify({
+                        app_name: "platform",
+                        payload: {},
+                    })
+                ),
+                PartitionKey: "test",
+            },
+        ],
+        StreamName: "test-s3-stream",
+    })
+);
+``*/
+
   function GetItemsNow(){
     docClient.get(params,onGet);
   }
 
+  function newGetDynamo(){
+    dynamo2.get(params, onGet);
+  }
+  function newScanDynamo(){
+    dynamo2.scan(params1, onScan);
+
+  }
   function onGet(err, data) {
     if (err) {
         console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
@@ -187,6 +223,7 @@ function GetItemById(toFindID){
 
     ScanAllItems();
     ScanItems();
+    newScanDynamo();
 
     window.document.activeElement.blur()
   }    
