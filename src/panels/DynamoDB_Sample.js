@@ -104,7 +104,6 @@ docClient.config.region ="ap-northeast-1";
 
   function GetItemsNow(){
     docClient.get(params,onGet);
-    docClient.
   }
 
   function onGet(err, data) {
