@@ -96,21 +96,24 @@ docClient.config.region ="ap-northeast-1";
   }
 
   var params = {
-      TableName: "Website_PlayerData_Sample",
+      TableName: 'Website_PlayerData_Sample',
       Key: {
-          PlayerID: "10001"
+          PlayerID: '10001'
       }
   };
 
   function GetItemsNow(){
     docClient.get(params,onGet);
+    docClient.
   }
 
   function onGet(err, data) {
     if (err) {
         console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+        console.log(err);
     } else {        
         console.log("Scan succeeded.");
+        console.log(data);
         data.Items.forEach(function(itemdata) {
            console.log("Item :", ++count,JSON.stringify(itemdata));
         });
@@ -126,9 +129,7 @@ docClient.config.region ="ap-northeast-1";
 
 
   const params1 = {
-    TableName :"Website_PlayerData_Sample",
-    
-
+    TableName :'Website_PlayerData_Sample'
   }
 
 
@@ -143,6 +144,7 @@ docClient.config.region ="ap-northeast-1";
           console.log(err);
       } else {        
           console.log("Scan succeeded.");
+          console.log(data);
           data.Items.forEach(function(itemdata) {
              console.log("Item :", ++count,JSON.stringify(itemdata));
           });
