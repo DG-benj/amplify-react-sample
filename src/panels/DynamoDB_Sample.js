@@ -57,8 +57,8 @@ docClient.config.region ="ap-northeast-1";
 const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: awsconfig.AccessKey,
-        secretAccessKey: awsconfig.SAKey,
+        accessKeyId: process.env.ACCESSKEYID,
+        secretAccessKey: process.env.SECRETACCESSKEY,
     }
 });
 
@@ -77,7 +77,7 @@ const dynamo2 = new DynamoDB.DocumentClient({
   var params = {
       TableName: 'Website_PlayerData_Sample',
       Key: {
-          PlayerID: '10001'
+          PlayerID: '10001',
       }
   };
 
