@@ -54,11 +54,11 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB();
 docClient.config.region ="ap-northeast-1";
 
-const dynamo2 = new DynamoDB({
+const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: process.env.acces,
-        secretAccessKey: process.env.SECRET_ACCESS_KEY,
+        accessKeyId: awsconfig.AccessKey,
+        secretAccessKey: awsconfig.SAKey,
     }
 });
 
@@ -70,46 +70,6 @@ const dynamo2 = new DynamoDB({
    GetItemsNow();
   GetItemById("10001");
   newGetDynamo();
-    /*let xhrReqs = []
-
-    if(!isButtonClicked(inButton)) {
-      var payloads = []
-      var completePayload = ""
-      
-      function pushBoolArrayPayload(id, arr) {
-        arr.forEach((item, index, arr) => {
-          var payload = PayloadHandler.createPayloadBool(`${id}${index+1}`, item.checked)
-          payloads.push(payload);
-        }) 
-      }
-
-      function pushBoolPayload(id, item) {
-        var payload = PayloadHandler.createPayloadBool(id, item)
-        payloads.push(payload)
-      }
-
-      function pushPayload(id, item) {
-        var payload = PayloadHandler.createPayload(id, item)
-        payloads.push(payload)
-      }
-
-      pushBoolArrayPayload("bso-b", ballValues)
-      pushBoolArrayPayload("bso-s", strikeValues)
-      pushBoolArrayPayload("bso-o", outValues)
-      pushBoolArrayPayload("bso-rui", ruiValues)
-
-      pushBoolPayload("bso-omote", omoteValue)
-      pushBoolPayload("bso-ura", uraValue)
-      pushPayload("bso-kai", kaiValue)
-      pushPayload("bso-toku-up", upValue)
-      pushPayload("bso-toku-down", downValue)
-
-      completePayload = PayloadHandler.combinePayloads(payloads)
-      xhrReqs.push(PayloadHandler.setPayload("BSO", completePayload))
-    }
-    xhrReqs.push(PayloadHandler.triggerAnimation("BSO", "Toggle"))
-
-    PayloadHandler.executeXHR(xhrReqs)*/
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
