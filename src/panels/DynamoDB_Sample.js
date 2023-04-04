@@ -45,9 +45,12 @@ export default function DynamoDB_Sample() {
   console.log(awsconfig.AccessKey);
   console.log(awsconfig.SAKey);
 
+  console.log(process.env.ACCESSKEYID + " from ENV");
+  console.log(process.env.SECRETACCESSKEY + " from ENV");
+
   AWS.config.update({region: 'ap-northeast-1',
-                     accessKeyId: creds.accessKeyId,
-                      accessSecretKey: creds.secretAccessKey});
+                     accessKeyId: awsconfig.AccessKey,
+                      accessSecretKey: awsconfig.SAKey});
 var docClient = new AWS.DynamoDB();
 docClient.config.region ="ap-northeast-1";
 
@@ -118,23 +121,26 @@ const dynamo2 = new DynamoDB({
       }
   };
 
- /* const resp = await client.send(
-    new PutRecordsCommand({
-        Records: [
-            {
-                Data: Buffer.from(
-                    JSON.stringify({
-                        app_name: "platform",
-                        payload: {},
-                    })
-                ),
-                PartitionKey: "test",
-            },
-        ],
-        StreamName: "test-s3-stream",
-    })
-);
-``*/
+  /*async function samplecode(){
+    const resp = await client.send(
+      new PutRecordsCommand({
+          Records: [
+              {
+                  Data: Buffer.from(
+                      JSON.stringify({
+                          app_name: "platform",
+                          payload: {},
+                      })
+                  ),
+                  PartitionKey: "test",
+              },
+          ],
+          StreamName: "test-s3-stream",
+      })
+  );
+  } 
+ */
+
 
   function GetItemsNow(){
     docClient.get(params,onGet);
