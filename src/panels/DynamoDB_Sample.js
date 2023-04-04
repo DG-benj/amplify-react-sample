@@ -40,6 +40,11 @@ export default function DynamoDB_Sample() {
   const creds = Auth.essentialCredentials(crendentials);
   
   AWS.config.credentials = new AWS.Credentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
+  console.log(creds.accessKeyId);
+  console.log(creds.secretAccessKey);
+  console.log(awsconfig.AccessKey);
+  console.log(awsconfig.SAKey);
+
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: creds.accessKeyId,
                       accessSecretKey: creds.secretAccessKey});
@@ -49,7 +54,7 @@ docClient.config.region ="ap-northeast-1";
 const dynamo2 = new DynamoDB({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: process.env.ACCESS_KEY,
+        accessKeyId: process.env.acces,
         secretAccessKey: process.env.SECRET_ACCESS_KEY,
     }
 });
