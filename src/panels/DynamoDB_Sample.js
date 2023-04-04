@@ -51,15 +51,28 @@ export default function DynamoDB_Sample() {
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: awsconfig.AccessKey,
                       accessSecretKey: awsconfig.SAKey});
-var docClient = new AWS.DynamoDB();
-docClient.config.region ="ap-northeast-1";
+var docClient = new AWS.DynamoDB.DocumentClient({
+  region:'ap-northeast-1',
+  credentials:{
+      accessKeyId: awsconfig.AccessKey,
+      secretAccessKey: awsconfig.SAKey,
+  }
+});
 
 const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: process.env.ACCESSKEYID,
-        secretAccessKey: process.env.SECRETACCESSKEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
     }
+});
+
+const dynamo3 = new DynamoDB.DocumentClient({
+  region:'ap-northeast-1',
+  credentials:{
+      accessKeyId: creds.accessKeyId,
+      secretAccessKey: creds.secretAccessKey,
+  }
 });
 
   function onInClick(inButton, outButton) {
@@ -111,6 +124,7 @@ const dynamo2 = new DynamoDB.DocumentClient({
   }
   function newScanDynamo(){
     dynamo2.scan(params1, onScan);
+    dynamo3.scan(params1, onScan);
 
   }
   function onGet(err, data) {
