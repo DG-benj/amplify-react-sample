@@ -62,16 +62,16 @@ var docClient = new AWS.DynamoDB.DocumentClient({
 const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
+        accessKeyId: process.env.aws_access_key,
+        secretAccessKey: process.env.aws_secretaccess_key,
     }
 });
 
 const dynamo3 = new DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId: creds.accessKeyId,
-      secretAccessKey: creds.secretAccessKey,
+      accessKeyId: process.env.ACCESSKEYID,
+      secretAccessKey: process.env.SECRETACCESSKEY,
   }
 });
 
@@ -81,16 +81,17 @@ const dynamo3 = new DynamoDB.DocumentClient({
       toggleButtonColor(outButton)
     }
    GetItemsNow();
-  GetItemById("10001");
-  newGetDynamo();
+//  GetItemById("10001");
+  //newGetDynamo();
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
 
   var params = {
-      TableName: 'Website_PlayerData_Sample',
+      TableName: "Website_PlayerData_Sample",
+      
       Key: {
-          PlayerID: '10001',
+          PlayerID: "10001",
       }
   };
 
@@ -116,7 +117,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
 
 
   function GetItemsNow(){
-    docClient.get(params,onGet);
+    docClient.GetItemById(params,onGet);
   }
 
   function newGetDynamo(){
