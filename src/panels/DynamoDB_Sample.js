@@ -179,6 +179,8 @@ const dynamo3 = new DynamoDB.DocumentClient({
       }
   }
 
+  /*for pushin only nothing more nothing less*/
+
 
 API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
   this.dynamoAPIs = JSON.parse(result.body);
