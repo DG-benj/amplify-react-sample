@@ -38,7 +38,12 @@ export default function DynamoDB_Sample() {
   
   const crendentials = Auth.currentCredentials();
   const creds = Auth.essentialCredentials(crendentials);
-  
+  console.log(Amplify.Credentials.ACCESSKEYID + " capital");
+
+  console.log(Amplify.Credentials.accessKeyId);
+console.log(Amplify.Credentials.secretAccessKey);
+console.log(Amplify.Credentials.SECRETACCESSKEY + " capital");
+
   AWS.config.credentials = new AWS.Credentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
   console.log(creds.accessKeyId);
   console.log(creds.secretAccessKey);
