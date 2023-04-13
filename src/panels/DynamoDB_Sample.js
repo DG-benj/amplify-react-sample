@@ -15,6 +15,7 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
 import { DynamoDB } from 'aws-sdk'
+import { text } from 'stream/consumers'
 ///import credentials from '../aws/credentials';
 
 //Amplify.configure(awsconfig);
@@ -54,20 +55,14 @@ export default function DynamoDB_Sample() {
   
  
 
-  const crendentials = Auth.currentCredentials();
-  const creds = Auth.essentialCredentials(crendentials);
-  console.log(Amplify.Credentials.ACCESSKEYID + " capital");
-
-  console.log(Amplify.Credentials.accessKeyId);
-  console.log(Amplify.Credentials.secretAccessKey);
-  console.log(Amplify.Credentials.SECRETACCESSKEY + " capital");
-
-  AWS.config.credentials = new AWS.Credentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
-  console.log(creds.accessKeyId);
-  console.log(creds.secretAccessKey);
-  console.log(awsconfig.AccessKey);
-  console.log(awsconfig.SAKey);
-
+  const credentails_frmENV = process.env.REACT_APP_ACCESSKEYID;
+  const keyIDs = credentails_frmENV.split(","); 
+  const credentails_frmENV_AKI = keyIDs[0].replace("\"","");
+   credentails_frmENV_AKI = keyIDs[0].replace("{","");
+  const credentails_frmENV_SAKI = keyIDs[1].replace("\"","");
+   credentails_frmENV_SAKI = keyIDs[1].replace("}","");
+   console.log("NEW AKI = " + credentails_frmENV_AKI);
+   console.log("NEW SAKI = " + credentails_frmENV_SAKI);
   console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: awsconfig.AccessKey,
@@ -75,16 +70,16 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId:Amplify.Credentials.aws_access_key,
-      secretAccessKey: Amplify.Credentials.aws_secretaccess_key,
+      accessKeyId:awsconfig.AccessKey,
+      secretAccessKey: awsconfig.SAKey,
   }
 });
 
 const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: process.env.aws_access_key,
-        secretAccessKey: process.env.aws_secretaccess_key,
+        accessKeyId: credentails_frmENV_AKI,
+        secretAccessKey: credentails_frmENV_SAKI,
     }
 });
 
@@ -127,7 +122,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
   function newScanDynamo(){
     dynamo2.scan(params1, onScan);
     dynamo3.scan(params1, onScan);
-    console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
+    console.log(process.env.ACCESSKEYID + " from ENV");
 
   }
   function onGet(err, data) {
