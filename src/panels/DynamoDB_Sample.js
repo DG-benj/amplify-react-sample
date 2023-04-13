@@ -77,8 +77,8 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId:Amplify.Credentials.accessKeyId,
-      secretAccessKey: Amplify.Credentials.secretAccessKey,
+      accessKeyId:Amplify.Credentials.aws_access_key,
+      secretAccessKey: Amplify.Credentials.aws_secretaccess_key,
   }
 });
 
@@ -109,7 +109,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
-
+ 
   var params = {
       TableName: "Website_PlayerData_Sample",
       
@@ -149,6 +149,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
   function newScanDynamo(){
     dynamo2.scan(params1, onScan);
     dynamo3.scan(params1, onScan);
+    console.log(process.env.ACCESSKEYID + " from ENV");
 
   }
   function onGet(err, data) {
