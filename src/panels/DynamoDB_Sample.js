@@ -16,30 +16,11 @@ import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
 import { DynamoDB } from 'aws-sdk'
 
-///import credentials from '../aws/credentials';
-
-//Amplify.configure(awsconfig);
-
 const AWS = require('aws-sdk');
 const AWS2 = require('aws-sdk');
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
-//const amplifyCreden = any;
-
-/*try{
-  let session = Amplify.core.Auth.fetchAuthSession();
-  const awsCredentialsProvider =  session.AuthAWSCredentialsProvider();
-  const amplifyCreden = awsCredentialsProvider.getAWSCredentials().get();
-
-  console.log(amplifyCreden);
- /* if(awsCredentialsProvider == session as? AuthAWSCredentialsProvider){
-  }
-
-  if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
-    let credentials = try awsCredentialsProvider.getAWSCredentials().get()
-    // Do something with the credentials
-}  }catch{};*/
 
 export default function DynamoDB_Sample() {
 
@@ -52,44 +33,12 @@ export default function DynamoDB_Sample() {
   const [kaiValue, setKaiValue] = useState(null)
   const [upValue, setUpValue] = useState(null)
   const [downValue, setDownValue] = useState(null)
-  
 
-
-  /*const credentails_frmENV = process.env.REACT_APP_ACCESSKEYID;
-  const keyIDs = credentails_frmENV.split(","); 
-  const credentails_frmENV_AKI = keyIDs[0].replace("\"","");
-   credentails_frmENV_AKI = keyIDs[0].replace("{","");
-  const credentails_frmENV_SAKI = keyIDs[1].replace("\"","");
-   credentails_frmENV_SAKI = keyIDs[1].replace("}","");
-   console.log("NEW AKI = " + credentails_frmENV_AKI);
-   console.log("NEW SAKI = " + credentails_frmENV_SAKI);*/
-
-  console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
-  console.log(process.env.REACT_APP_SECRETACCESSKEY + " from ENV");
-  AWS.config.update({region: 'ap-northeast-1',
-                     accessKeyId: awsconfig.AccessKey,
-                      accessSecretKey: awsconfig.SAKey});
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId:awsconfig.AccessKey,
-      secretAccessKey: awsconfig.SAKey,
-  }
-});
-
-const dynamo2 = new DynamoDB.DocumentClient({
-    region:'ap-northeast-1',
-    credentials:{
-        accessKeyId: awsconfig.AccessKey,
-        secretAccessKey: awsconfig.AccessKey,
-    }
-});
-
-const dynamo3 = new DynamoDB.DocumentClient({
-  region:'ap-northeast-1',
-  credentials:{
-      accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
   }
 });
 
@@ -99,8 +48,6 @@ const dynamo3 = new DynamoDB.DocumentClient({
       toggleButtonColor(outButton)
     }
    GetItemsNow();
-//  GetItemById("10001");
-  //newGetDynamo();
     toggleButtonColor(inButton)
     window.document.activeElement.blur()      
   }
@@ -118,15 +65,6 @@ const dynamo3 = new DynamoDB.DocumentClient({
     docClient.GetItemById(params,onGet);
   }
 
-  function newGetDynamo(){
-    dynamo2.get(params, onGet);
-  }
-  function newScanDynamo(){
-    dynamo2.scan(params1, onScan);
-    dynamo3.scan(params1, onScan);
-    console.log(process.env.ACCESSKEYID + " from ENV");
-
-  }
   function onGet(err, data) {
     if (err) {
         console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
@@ -178,38 +116,12 @@ const dynamo3 = new DynamoDB.DocumentClient({
       }
   }
 
-
-API.get('dynamoAPI', '/dynamoAPIs', {}).then(result => {
-  this.dynamoAPIs = JSON.parse(result.body);
- }).catch(err => {
-  console.log(err);
- })
-
-function ScanAllItems(){
-  console.log("Calling scan");
-
-  API.get('dynamoAPI', '/dynamoAPIs');
-}
-
-function GetItemById(toFindID){
-  console.log("Calling get");
-  API.get('dynamoAPI', '/dynamoAPIs/'+'${PlayerID}' + '{' + toFindID +'}', {}).then((result) => {
-    this.dynamoAPIs = JSON.parse(result.body);
-  }).catch(err => {
-    console.log(err);
-  })
-}
-
   function onOutClick(inButton, outButton) {
     
     if(isButtonClicked(inButton)) {
       toggleButtonColor(inButton)
     }
-
-    ScanAllItems();
     ScanItems();
-    newScanDynamo();
-
     window.document.activeElement.blur()
   }    
 
