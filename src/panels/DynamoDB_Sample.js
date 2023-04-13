@@ -7,6 +7,7 @@ import VertConnectedInput from '../components/VertConnectedInput'
 import LabeledCheckbox from '../components/LabeledCheckbox'
 import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
 
+//import AWSPluginsCore from '../AWSPluginsCore'
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
@@ -23,6 +24,21 @@ const AWS2 = require('aws-sdk');
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
+//const amplifyCreden = any;
+
+/*try{
+  let session = Amplify.core.Auth.fetchAuthSession();
+  const awsCredentialsProvider =  session.AuthAWSCredentialsProvider();
+  const amplifyCreden = awsCredentialsProvider.getAWSCredentials().get();
+
+  console.log(amplifyCreden);
+ /* if(awsCredentialsProvider == session as? AuthAWSCredentialsProvider){
+  }
+
+  if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
+    let credentials = try awsCredentialsProvider.getAWSCredentials().get()
+    // Do something with the credentials
+}  }catch{};*/
 
 export default function DynamoDB_Sample() {
 
@@ -36,13 +52,15 @@ export default function DynamoDB_Sample() {
   const [upValue, setUpValue] = useState(null)
   const [downValue, setDownValue] = useState(null)
   
+ 
+
   const crendentials = Auth.currentCredentials();
   const creds = Auth.essentialCredentials(crendentials);
   console.log(Amplify.Credentials.ACCESSKEYID + " capital");
 
   console.log(Amplify.Credentials.accessKeyId);
-console.log(Amplify.Credentials.secretAccessKey);
-console.log(Amplify.Credentials.SECRETACCESSKEY + " capital");
+  console.log(Amplify.Credentials.secretAccessKey);
+  console.log(Amplify.Credentials.SECRETACCESSKEY + " capital");
 
   AWS.config.credentials = new AWS.Credentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken);
   console.log(creds.accessKeyId);
@@ -59,8 +77,8 @@ console.log(Amplify.Credentials.SECRETACCESSKEY + " capital");
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId: awsconfig.AccessKey,
-      secretAccessKey: awsconfig.SAKey,
+      accessKeyId:Amplify.Credentials.accessKeyId,
+      secretAccessKey: Amplify.Credentials.secretAccessKey,
   }
 });
 
