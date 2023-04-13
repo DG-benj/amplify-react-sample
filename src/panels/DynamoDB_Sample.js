@@ -15,7 +15,7 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
 import { DynamoDB } from 'aws-sdk'
-import { text } from 'stream/consumers'
+
 ///import credentials from '../aws/credentials';
 
 //Amplify.configure(awsconfig);
@@ -53,17 +53,19 @@ export default function DynamoDB_Sample() {
   const [upValue, setUpValue] = useState(null)
   const [downValue, setDownValue] = useState(null)
   
- 
 
-  const credentails_frmENV = process.env.REACT_APP_ACCESSKEYID;
+
+  /*const credentails_frmENV = process.env.REACT_APP_ACCESSKEYID;
   const keyIDs = credentails_frmENV.split(","); 
   const credentails_frmENV_AKI = keyIDs[0].replace("\"","");
    credentails_frmENV_AKI = keyIDs[0].replace("{","");
   const credentails_frmENV_SAKI = keyIDs[1].replace("\"","");
    credentails_frmENV_SAKI = keyIDs[1].replace("}","");
    console.log("NEW AKI = " + credentails_frmENV_AKI);
-   console.log("NEW SAKI = " + credentails_frmENV_SAKI);
+   console.log("NEW SAKI = " + credentails_frmENV_SAKI);*/
+
   console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
+  console.log(process.env.REACT_APP_SECRETACCESSKEY + " from ENV");
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: awsconfig.AccessKey,
                       accessSecretKey: awsconfig.SAKey});
@@ -78,8 +80,8 @@ var docClient = new AWS.DynamoDB.DocumentClient({
 const dynamo2 = new DynamoDB.DocumentClient({
     region:'ap-northeast-1',
     credentials:{
-        accessKeyId: credentails_frmENV_AKI,
-        secretAccessKey: credentails_frmENV_SAKI,
+        accessKeyId: awsconfig.AccessKey,
+        secretAccessKey: awsconfig.AccessKey,
     }
 });
 
@@ -87,7 +89,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
       accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-      secretAccessKey: process.env.SECRETACCESSKEY,
+      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
   }
 });
 
