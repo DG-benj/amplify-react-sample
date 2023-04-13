@@ -70,7 +70,8 @@ export default function DynamoDB_Sample() {
 
   console.log(process.env.ACCESSKEYID + " from ENV");
   console.log(process.env.SECRETACCESSKEY + " from ENV");
-
+  console.log(process.env.local.ACCESSKEYID + " from local ENV");
+  console.log(process.env.SECRETACCESSKEY + " from ENV");
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: awsconfig.AccessKey,
                       accessSecretKey: awsconfig.SAKey});
@@ -93,7 +94,7 @@ const dynamo2 = new DynamoDB.DocumentClient({
 const dynamo3 = new DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId: process.env.ACCESSKEYID,
+      accessKeyId: process.env.local.ACCESSKEYID,
       secretAccessKey: process.env.SECRETACCESSKEY,
   }
 });
