@@ -68,10 +68,7 @@ export default function DynamoDB_Sample() {
   console.log(awsconfig.AccessKey);
   console.log(awsconfig.SAKey);
 
-  console.log(process.env.ACCESSKEYID + " from ENV");
-  console.log(process.env.SECRETACCESSKEY + " from ENV");
-  console.log(process.env.local.ACCESSKEYID + " from local ENV");
-  console.log(process.env.SECRETACCESSKEY + " from ENV");
+  console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
   AWS.config.update({region: 'ap-northeast-1',
                      accessKeyId: awsconfig.AccessKey,
                       accessSecretKey: awsconfig.SAKey});
@@ -94,7 +91,7 @@ const dynamo2 = new DynamoDB.DocumentClient({
 const dynamo3 = new DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-      accessKeyId: process.env.local.ACCESSKEYID,
+      accessKeyId: process.env.REACT_APP_ACCESSKEYID,
       secretAccessKey: process.env.SECRETACCESSKEY,
   }
 });
@@ -119,26 +116,6 @@ const dynamo3 = new DynamoDB.DocumentClient({
       }
   };
 
-  /*async function samplecode(){
-    const resp = await client.send(
-      new PutRecordsCommand({
-          Records: [
-              {
-                  Data: Buffer.from(
-                      JSON.stringify({
-                          app_name: "platform",
-                          payload: {},
-                      })
-                  ),
-                  PartitionKey: "test",
-              },
-          ],
-          StreamName: "test-s3-stream",
-      })
-  );
-  } 
- */
-
 
   function GetItemsNow(){
     docClient.GetItemById(params,onGet);
@@ -150,7 +127,7 @@ const dynamo3 = new DynamoDB.DocumentClient({
   function newScanDynamo(){
     dynamo2.scan(params1, onScan);
     dynamo3.scan(params1, onScan);
-    console.log(process.env.ACCESSKEYID + " from ENV");
+    console.log(process.env.REACT_APP_ACCESSKEYID + " from ENV");
 
   }
   function onGet(err, data) {
