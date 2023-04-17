@@ -34,11 +34,16 @@ export default function DynamoDB_Sample() {
   const [upValue, setUpValue] = useState(null)
   const [downValue, setDownValue] = useState(null)
 
+  const [currentPlayerID, setPlayerIDValue] = useState(null)
+  const [currentPlayerName, setPlayerNameValue] = useState(null)
+
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
     accessKeyId: process.env.REACT_APP_ACCESSKEYID,
     secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+  // accessKeyId: awsconfig.AccessKey,
+ //  secretAccessKey: awsconfig.SAKey,
   }
 });
 
@@ -52,36 +57,25 @@ var docClient = new AWS.DynamoDB.DocumentClient({
     window.document.activeElement.blur()      
   }
  
-  var params = {
-      TableName: "Website_PlayerData_Sample",
-      
-      Key: {
-          PlayerID: "10001",
-      }
-  };
-
 
   function GetItemsNow(){
-    docClient.GetItemById(params,onGet);
+      var params = {
+        TableName: "Website_PlayerData_Sample",
+        Key: {
+           PlayerID: parseInt(currentPlayerID.toString()),
+           PlayerName: currentPlayerName.toString(),
+        },
+    };
+      docClient.get(params,onGet);
   }
 
   function onGet(err, data) {
     if (err) {
-        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+        console.error("Unable to get the item. Error JSON:", JSON.stringify(err, null, 2));
         console.log(err);
     } else {        
         console.log("Scan succeeded.");
         console.log(data);
-        data.Items.forEach(function(itemdata) {
-           console.log("Item :", ++count,JSON.stringify(itemdata));
-        });
-
-        // continue scanning if we have more items
-        if (typeof data.LastEvaluatedKey != "undefined") {
-            console.log("Scanning for more...");
-            params.ExclusiveStartKey = data.LastEvaluatedKey;
-            docClient.scan(params, onScan);
-        }
     }
 }
 
@@ -106,13 +100,6 @@ var docClient = new AWS.DynamoDB.DocumentClient({
           data.Items.forEach(function(itemdata) {
              console.log("Item :", ++count,JSON.stringify(itemdata));
           });
-  
-          // continue scanning if we have more items
-          if (typeof data.LastEvaluatedKey != "undefined") {
-              console.log("Scanning for more...");
-              params.ExclusiveStartKey = data.LastEvaluatedKey;
-              docClient.scan(params, onScan);
-          }
       }
   }
 
@@ -127,10 +114,99 @@ var docClient = new AWS.DynamoDB.DocumentClient({
 
 
 
+  function onDeleteClick(deleteButton, outButton){
+  console.log("delete is clicked");
+
+    var params2 = {
+      TableName : 'Website_PlayerData_Sample',
+      Key: {
+        PlayerID: parseInt(currentPlayerID.toString()),
+        PlayerName: currentPlayerName.toString(),
+      }
+    };
+    docClient.delete(params2,onDelete);
+
+  }
+
+  function onDelete(err, data) {
+    if (err) {
+        console.error("Unable to delete the item. Error JSON:", JSON.stringify(err, null, 2));
+        console.log(err);
+    } else {        
+        console.log("delete succeeded.");
+        console.log(data);
+    }
+}
+
+
+function onUpdateClick(updateButton, outButton){
+  console.log("update is clicked");
+
+  var params3 = {
+    TableName : 'Website_PlayerData_Sample',
+    Item: {
+      PlayerID: 10009,
+      PlayerName: "test",
+      PlayerNumber: 90,
+      PlayerRecord: 9-9,
+      PlayerWinRate: "50%",
+      TeamName: "VSC_2",
+    }
+  };
+  docClient.put(params3,onUpdate);
+
+}
+
+function onUpdate(err, data) {
+  if (err) {
+      console.error("Unable to update the item. Error JSON:", JSON.stringify(err, null, 2));
+      console.log(err);
+  } else {        
+      console.log("update succeeded.");
+      console.log(data);
+  }
+}
+
+function onCreateClick(createButton, outButton){
+  console.log("Create is clicked");
+
+  var params4 = {
+    TableName : 'Website_PlayerData_Sample',
+    Item: {
+      PlayerID: 10009,
+      PlayerName: "test",
+      PlayerNumber: 88,
+      PlayerRecord: 8-8,
+      PlayerWinRate: "50%",
+      TeamName: "VSC",
+
+    }
+  };
+  docClient.put(params4,onCreate);
+}
+
+
+function onCreate(err, data) {
+  if (err) {
+      console.error("Unable to create the item. Error JSON:", JSON.stringify(err, null, 2));
+      console.log(err);
+  } else {        
+      console.log("create succeeded.");
+      console.log(data);
+  }
+}
   return (
-    <Col xs={2} className="control-panel">
+    <Col xs={5} className="control-panel">
         <h5 className='txt-panel-label'>DYNAMODB_SAMPLE</h5>
-        {/*
+        {
+         <><InputText
+          text="Player ID"
+          handleOnChange={(e) => { setPlayerIDValue(e) } } />
+          <InputText
+          text="Player Name"
+          handleOnChange={(e) => { setPlayerNameValue(e) } } />
+          </>
+       /*
         <CheckboxGroup 
           text="BALL" 
           count={3} 
@@ -170,10 +246,7 @@ var docClient = new AWS.DynamoDB.DocumentClient({
           handleOnChange={(e) => setUraValue(e)}
         />
 
-        <InputText 
-          text="回"
-          handleOnChange={(e) => { setKaiValue(e) }}
-        />
+       
 
         <VertConnectedInput
             firstText="UP"
@@ -194,7 +267,10 @@ var docClient = new AWS.DynamoDB.DocumentClient({
         <VertConnectedInput firstText="UP" secondText="DOWN" mt={3}/>*/}
         <DynamoDB_BTN
             onInClick={(inButton, outButton) => onInClick(inButton, outButton)}
-            onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}/> 
+            onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}
+            onDeleteClick={(deleteButton, outButton) => onDeleteClick(deleteButton, outButton)}
+            onCreateClick={(createButton, outButton) => onCreateClick(createButton, outButton)}
+            onUpdateClick={(updateButton, outButton) => onUpdateClick(updateButton, outButton)}/> 
     </Col>
   )
 }
