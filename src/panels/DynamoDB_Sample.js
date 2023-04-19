@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import InOutBtnGroup from '../components/InOutBtnGroup'
 import CheckboxGroup from '../components/CheckboxGroup'
@@ -6,8 +6,12 @@ import InputText from  '../components/InputText'
 import VertConnectedInput from '../components/VertConnectedInput'
 import LabeledCheckbox from '../components/LabeledCheckbox'
 import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
+import ListView from '../components/ListView'
+import createbutton1 from '../components/CreateButton'
 
-//import AWSPluginsCore from '../AWSPluginsCore'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
@@ -15,6 +19,7 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
 import { DynamoDB } from 'aws-sdk'
+import { useImperativeHandle } from 'react'
 
 const AWS = require('aws-sdk');
 const AWS2 = require('aws-sdk');
@@ -24,7 +29,7 @@ var ddb2 = process.env.getItem;
 
 export default function DynamoDB_Sample() {
 
-  const [ballValues, setBallValues] = useState([])
+ /* const [ballValues, setBallValues] = useState([])
   const [strikeValues, setStrikeValues] = useState([])
   const [outValues, setOutValues] = useState([])
   const [ruiValues, setRuiValues] = useState([])
@@ -32,21 +37,76 @@ export default function DynamoDB_Sample() {
   const [uraValue, setUraValue] = useState(null)
   const [kaiValue, setKaiValue] = useState(null)
   const [upValue, setUpValue] = useState(null)
-  const [downValue, setDownValue] = useState(null)
+  const [downValue, setDownValue] = useState(null)*/
+
+  const [listValue, setListValue] = useState(null)
+  const [options, setOptions] = useState([])
+
+  var showCreatePopUp = false;
 
   const [currentPlayerID, setPlayerIDValue] = useState(null)
   const [currentPlayerName, setPlayerNameValue] = useState(null)
 
+  const params1 = {
+    TableName :'Website_PlayerData_Sample'
+  }
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
-  // accessKeyId: awsconfig.AccessKey,
- //  secretAccessKey: awsconfig.SAKey,
+   accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+   secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+   //accessKeyId: awsconfig.AccessKey,
+  // secretAccessKey: awsconfig.SAKey,
   }
 });
 
+useEffect(() => {
+  if(options.length !== 0) {
+    console.log("0");
+      return
+  }
+  ListViewData((data) => {
+      setOptions(data)
+  })
+}, [options.length])
+
+
+function handleListView(data) {
+  return (<ListView 
+  data={options} 
+  handleOnChange={value => setListValue(value)}
+/>)
+}
+
+function ListViewData(){
+  console.log("here");
+  docClient.scan(params1, function(err, data) {
+    if (err) console.log(err);
+    else{
+    console.log(data);
+    var newdata = [];
+    data.Items.forEach(function(itemdata) {
+      console.log("Item :", ++count,JSON.stringify(itemdata));
+    //  newdata.push(JSON.stringify(itemdata));
+   });
+    //newdata.push( JSON.parse(data)['PlayerNumber']);
+    //console.log(newdata);
+    return newdata;
+    }
+  })
+}
+
+function UpdateListView(data){
+  //console.log(data);
+ // setListValue = data;
+}
+
+function SendCreateNewItem(){
+
+}
+
+
+// #region GET ITEM FUNCTIONS
   function onInClick(inButton, outButton) {
 
     if(isButtonClicked(outButton)) {
@@ -78,13 +138,10 @@ var docClient = new AWS.DynamoDB.DocumentClient({
         console.log(data);
     }
 }
+// #endregion
 
-
-  const params1 = {
-    TableName :'Website_PlayerData_Sample'
-  }
-
-
+// #region SCAN ALL FUNCTIONS
+  
   function ScanItems(){
     docClient.scan(params1, onScan);
   }
@@ -98,8 +155,10 @@ var docClient = new AWS.DynamoDB.DocumentClient({
           console.log("Scan succeeded.");
           console.log(data);
           data.Items.forEach(function(itemdata) {
-             console.log("Item :", ++count,JSON.stringify(itemdata));
-          });
+            console.log("Item :", ++count,JSON.stringify(itemdata));
+         });
+        UpdateListView(data);
+          
       }
   }
 
@@ -111,9 +170,9 @@ var docClient = new AWS.DynamoDB.DocumentClient({
     ScanItems();
     window.document.activeElement.blur()
   }    
+// #endregion
 
-
-
+// #region DELETE FUNCTION
   function onDeleteClick(deleteButton, outButton){
   console.log("delete is clicked");
 
@@ -137,8 +196,9 @@ var docClient = new AWS.DynamoDB.DocumentClient({
         console.log(data);
     }
 }
+// #endregion
 
-
+// #region UPDATE FUNCTIONS
 function onUpdateClick(updateButton, outButton){
   console.log("update is clicked");
 
@@ -148,7 +208,7 @@ function onUpdateClick(updateButton, outButton){
       PlayerID: 10009,
       PlayerName: "test",
       PlayerNumber: 90,
-      PlayerRecord: 9-9,
+      PlayerRecord: "9-9",
       PlayerWinRate: "50%",
       TeamName: "VSC_2",
     }
@@ -166,25 +226,28 @@ function onUpdate(err, data) {
       console.log(data);
   }
 }
+// #endregion
 
+// #region CREATE FUNCTIONS
+//
 function onCreateClick(createButton, outButton){
   console.log("Create is clicked");
-
-  var params4 = {
+  showCreatePopUp = true;
+  console.log(showCreatePopUp);
+ /* var params4 = {
     TableName : 'Website_PlayerData_Sample',
     Item: {
       PlayerID: 10009,
       PlayerName: "test",
       PlayerNumber: 88,
-      PlayerRecord: 8-8,
+      PlayerRecord: "8-8",
       PlayerWinRate: "50%",
       TeamName: "VSC",
 
     }
   };
-  docClient.put(params4,onCreate);
+  docClient.put(params4,onCreate);*/
 }
-
 
 function onCreate(err, data) {
   if (err) {
@@ -195,6 +258,8 @@ function onCreate(err, data) {
       console.log(data);
   }
 }
+// #endregion
+
   return (
     <Col xs={5} className="control-panel">
         <h5 className='txt-panel-label'>DYNAMODB_SAMPLE</h5>
@@ -206,65 +271,23 @@ function onCreate(err, data) {
           text="Player Name"
           handleOnChange={(e) => { setPlayerNameValue(e) } } />
           </>
-       /*
-        <CheckboxGroup 
-          text="BALL" 
-          count={3} 
-          spacing="21px" 
-          handleOnChange={(values) => setBallValues(values)}
-        />
-
-        <CheckboxGroup 
-          text="STRIKE" 
-          count={2} 
-          spacing="6px" 
-          handleOnChange={(values) => setStrikeValues(values)}
-        />
-
-        <CheckboxGroup 
-          text="OUT" 
-          count={2} 
-          spacing="26px" 
-          handleOnChange={(values) => setOutValues(values)}
-        />
-
-        <CheckboxGroup 
-          text="RUI" 
-          count={2} 
-          spacing="32px" 
-          handleOnChange={(values) => setRuiValues(values)}
-        />
-
-        <LabeledCheckbox
-          text="表"
-          inline="true"
-          handleOnChange={(e) => setOmoteValue(e)}
-        />
-        <LabeledCheckbox
-          text="裏"
-          inline="true"
-          handleOnChange={(e) => setUraValue(e)}
-        />
-
-       
-
-        <VertConnectedInput
-            firstText="UP"
-            secondText="DOWN"
-            mt="3"
-            onFirstTextChange={(e) =>  setUpValue(e)}
-            onSecondTextChange={(e) => setDownValue(e)}
-        />
-  */
       }
+        {handleListView()}
 
-        {/* <CheckboxGroup text="STRIKE" count={2} spacing="6px"/>
-        <CheckboxGroup text="OUT" count={2} spacing="26px"/>
-        <CheckboxGroup text="RUI" count={2} spacing="32px"/>
-        <LabeledCheckbox text="表" inline="true"/>
-        <LabeledCheckbox text="裏" inline="true"/>
-        <InputText text="回"/>
-        <VertConnectedInput firstText="UP" secondText="DOWN" mt={3}/>*/}
+      <Modal id="CreateModal" show={showCreatePopUp} onHide={SendCreateNewItem}>
+        <Modal.Header closebutton>
+          <Modal.Title>Creating New Item</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputText text="Player ID"></InputText>
+          <InputText text="Player Name"></InputText>
+          <InputText text="Player Number"></InputText>
+          <InputText text="Player Record"></InputText>
+          <InputText text="Player Win Rate"></InputText>
+          <InputText text="Team Name"></InputText>
+        </Modal.Body>
+      </Modal>
+     
         <DynamoDB_BTN
             onInClick={(inButton, outButton) => onInClick(inButton, outButton)}
             onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}

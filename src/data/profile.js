@@ -10,7 +10,7 @@ export function getPlayerData(PlayerDataReceivedCallback) {
     xhr.onload = (e) => {
         data = JSON.parse(xhr.responseText)['PlayerData']
         PlayerDataReceivedCallback(data)
-        // console.log(data)
+         console.log(data)
     }
     xhr.send()
 }
