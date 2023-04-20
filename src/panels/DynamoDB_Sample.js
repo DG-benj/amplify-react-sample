@@ -41,8 +41,10 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
+    //for amplify credentials
     accessKeyId: process.env.REACT_APP_ACCESSKEYID,
     secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+    //for testing credentials
    // accessKeyId: awsconfig.AccessKey,
     //secretAccessKey: awsconfig.SAKey,
   }
@@ -121,7 +123,7 @@ function NewSelected(){
         TableName: "Website_PlayerData_Sample",
         Key: {
            PlayerID: document.getElementById("PlayerIDTB").value,
-           PlayerName:  document.getElementById("PlayerNameTB").value   ,
+           PlayerName:  document.getElementById("PlayerNameTB").value,
         },
     };
       docClient.get(params,onGet);
@@ -177,8 +179,8 @@ function NewSelected(){
     var params2 = {
       TableName : 'Website_PlayerData_Sample',
       Key: {
-        PlayerID: parseInt(currentPlayerID.toString()),
-        PlayerName: currentPlayerName.toString(),
+        PlayerID: parseInt(document.getElementById("PlayerIDTB").value),
+        PlayerName: document.getElementById("PlayerNameTB").value,
       }
     };
     docClient.delete(params2,onDelete);
@@ -205,12 +207,13 @@ function onUpdateClick(updateButton, outButton){
   var params3 = {
     TableName : 'Website_PlayerData_Sample',
     Item: {
-      PlayerID: 10009,
-      PlayerName: "test",
-      PlayerNumber: 90,
-      PlayerRecord: "9-9",
-      PlayerWinRate: "50%",
-      TeamName: "VSC_2",
+      PlayerID: parseInt(document.getElementById("PlayerIDTB").value),
+      PlayerName: document.getElementById("PlayerNameTB").value,
+      PlayerNumber:document.getElementById("PlayerNumberTB").value,
+      PlayerRecord: document.getElementById("PlayerRecordTB").value,
+      PlayerWinRate: document.getElementById("PlayerWinrateTB").value,
+      TeamName: document.getElementById("PlayerTeamNameTB").value,
+
     }
   };
   docClient.put(params3,onUpdate);
