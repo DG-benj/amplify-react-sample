@@ -192,6 +192,8 @@ function NewSelected(){
     } else {        
         console.log("delete succeeded.");
         console.log(data);
+      ListViewData();
+
     }
 }
 // #endregion
@@ -222,6 +224,8 @@ function onUpdate(err, data) {
   } else {        
       console.log("update succeeded.");
       console.log(data);
+      ListViewData();
+
   }
 }
 // #endregion
