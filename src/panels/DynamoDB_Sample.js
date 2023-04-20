@@ -41,10 +41,10 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-    //accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-    //secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
-    accessKeyId: awsconfig.AccessKey,
-    secretAccessKey: awsconfig.SAKey,
+    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+   // accessKeyId: awsconfig.AccessKey,
+    //secretAccessKey: awsconfig.SAKey,
   }
 });
 
