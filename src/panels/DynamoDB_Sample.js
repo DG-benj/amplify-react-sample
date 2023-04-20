@@ -7,7 +7,6 @@ import VertConnectedInput from '../components/VertConnectedInput'
 import LabeledCheckbox from '../components/LabeledCheckbox'
 import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
 import ListView from '../components/ListView'
-import createbutton1 from '../components/CreateButton'
 
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -26,23 +25,12 @@ const AWS2 = require('aws-sdk');
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
-
+var playerList = [];
 export default function DynamoDB_Sample() {
 
- /* const [ballValues, setBallValues] = useState([])
-  const [strikeValues, setStrikeValues] = useState([])
-  const [outValues, setOutValues] = useState([])
-  const [ruiValues, setRuiValues] = useState([])
-  const [omoteValue, setOmoteValue] = useState(false)
-  const [uraValue, setUraValue] = useState(null)
-  const [kaiValue, setKaiValue] = useState(null)
-  const [upValue, setUpValue] = useState(null)
-  const [downValue, setDownValue] = useState(null)*/
 
   const [listValue, setListValue] = useState(null)
   const [options, setOptions] = useState([])
-
-  var showCreatePopUp = false;
 
   const [currentPlayerID, setPlayerIDValue] = useState(null)
   const [currentPlayerName, setPlayerNameValue] = useState(null)
@@ -53,10 +41,10 @@ export default function DynamoDB_Sample() {
 var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
-   accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-   secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
-   //accessKeyId: awsconfig.AccessKey,
-  // secretAccessKey: awsconfig.SAKey,
+    //accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+    //secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+    accessKeyId: awsconfig.AccessKey,
+    secretAccessKey: awsconfig.SAKey,
   }
 });
 
@@ -79,32 +67,42 @@ function handleListView(data) {
 }
 
 function ListViewData(){
-  console.log("here");
   docClient.scan(params1, function(err, data) {
     if (err) console.log(err);
     else{
-    console.log(data);
+    UpdateListView(data);
     var newdata = [];
-    data.Items.forEach(function(itemdata) {
-      console.log("Item :", ++count,JSON.stringify(itemdata));
-    //  newdata.push(JSON.stringify(itemdata));
-   });
-    //newdata.push( JSON.parse(data)['PlayerNumber']);
-    //console.log(newdata);
+
     return newdata;
     }
   })
 }
 
 function UpdateListView(data){
-  //console.log(data);
- // setListValue = data;
+  var listview = document.getElementById("PlayerSelect");
+    listview.options.length = 0;
+    playerList = [];
+    var cnt = 0;
+    data.Items.forEach(function(itemdata) {
+      playerList.push(itemdata);
+      listview.options[listview.options.length] = new Option(itemdata.PlayerName, cnt);
+      cnt++;
+   });
+   console.log("here at 2 " +  playerList[2].PlayerName);
 }
 
-function SendCreateNewItem(){
+function NewSelected(){
+  var listview = document.getElementById("PlayerSelect");
+  console.log(playerList[listview.value].PlayerID + " - " +  playerList[listview.value].PlayerName);
 
+    document.getElementById("PlayerIDTB").value =  playerList[listview.value].PlayerID;
+    document.getElementById("PlayerNameTB").value = playerList[listview.value].PlayerName;
+    document.getElementById("PlayerNumberTB").value = playerList[listview.value].PlayerNumber;
+    document.getElementById("PlayerRecordTB").value = playerList[listview.value].PlayerRecord;
+    document.getElementById("PlayerWinrateTB").value = playerList[listview.value].PlayerWinRate;
+    document.getElementById("PlayerTeamNameTB").value = playerList[listview.value].TeamName
+  
 }
-
 
 // #region GET ITEM FUNCTIONS
   function onInClick(inButton, outButton) {
@@ -122,8 +120,8 @@ function SendCreateNewItem(){
       var params = {
         TableName: "Website_PlayerData_Sample",
         Key: {
-           PlayerID: parseInt(currentPlayerID.toString()),
-           PlayerName: currentPlayerName.toString(),
+           PlayerID: document.getElementById("PlayerIDTB").value,
+           PlayerName:  document.getElementById("PlayerNameTB").value   ,
         },
     };
       docClient.get(params,onGet);
@@ -232,21 +230,19 @@ function onUpdate(err, data) {
 //
 function onCreateClick(createButton, outButton){
   console.log("Create is clicked");
-  showCreatePopUp = true;
-  console.log(showCreatePopUp);
- /* var params4 = {
+   var params4 = {
     TableName : 'Website_PlayerData_Sample',
     Item: {
-      PlayerID: 10009,
-      PlayerName: "test",
-      PlayerNumber: 88,
-      PlayerRecord: "8-8",
-      PlayerWinRate: "50%",
-      TeamName: "VSC",
+      PlayerID: parseInt(document.getElementById("PlayerIDTB").value),
+      PlayerName: document.getElementById("PlayerNameTB").value,
+      PlayerNumber:document.getElementById("PlayerNumberTB").value,
+      PlayerRecord: document.getElementById("PlayerRecordTB").value,
+      PlayerWinRate: document.getElementById("PlayerWinrateTB").value,
+      TeamName: document.getElementById("PlayerTeamNameTB").value,
 
     }
   };
-  docClient.put(params4,onCreate);*/
+  docClient.put(params4,onCreate);
 }
 
 function onCreate(err, data) {
@@ -256,38 +252,36 @@ function onCreate(err, data) {
   } else {        
       console.log("create succeeded.");
       console.log(data);
+      ListViewData();
   }
 }
 // #endregion
 
   return (
+    
     <Col xs={5} className="control-panel">
         <h5 className='txt-panel-label'>DYNAMODB_SAMPLE</h5>
         {
-         <><InputText
-          text="Player ID"
-          handleOnChange={(e) => { setPlayerIDValue(e) } } />
-          <InputText
-          text="Player Name"
-          handleOnChange={(e) => { setPlayerNameValue(e) } } />
+         <>
+         <label for="ID" color='white'>Player ID:</label>
+         <input id="PlayerIDTB" text="Player ID"/> <br></br>
+         <label for="Name" color='white'>Player Name:</label>
+          <input id="PlayerNameTB" text="Player Name" /><br></br>
+         <label for="Number" color='white'>Player Number:</label>
+          <input id="PlayerNumberTB" text="Player Number"/><br></br>
+         <label for="Record" color='white'>Player Record:</label>
+          <input id="PlayerRecordTB" text="Player Record"/><br></br>
+         <label for="Win Rate" color='white'>Player Win Rate:</label>
+          <input id="PlayerWinrateTB" text="Player WinRate"/><br></br>
+         <label for="Team Name" color='white'>Team Name:</label>
+          <input id="PlayerTeamNameTB" text="Player Team Name"/><br></br>
           </>
+          
       }
-        {handleListView()}
+        <select id="PlayerSelect"name="Players" multiple size="4" onChange={NewSelected} >
 
-      <Modal id="CreateModal" show={showCreatePopUp} onHide={SendCreateNewItem}>
-        <Modal.Header closebutton>
-          <Modal.Title>Creating New Item</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <InputText text="Player ID"></InputText>
-          <InputText text="Player Name"></InputText>
-          <InputText text="Player Number"></InputText>
-          <InputText text="Player Record"></InputText>
-          <InputText text="Player Win Rate"></InputText>
-          <InputText text="Team Name"></InputText>
-        </Modal.Body>
-      </Modal>
-     
+        </select>
+
         <DynamoDB_BTN
             onInClick={(inButton, outButton) => onInClick(inButton, outButton)}
             onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}
