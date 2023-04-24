@@ -42,8 +42,8 @@ var docClient = new AWS.DynamoDB.DocumentClient({
   region:'ap-northeast-1',
   credentials:{
     //for amplify credentials
-    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
+  accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+  secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
     //for testing credentials
    // accessKeyId: awsconfig.AccessKey,
     //secretAccessKey: awsconfig.SAKey,
@@ -122,7 +122,7 @@ function NewSelected(){
       var params = {
         TableName: "Website_PlayerData_Sample",
         Key: {
-           PlayerID: document.getElementById("PlayerIDTB").value,
+           PlayerID: parseInt(document.getElementById("PlayerIDTB").value),
            PlayerName:  document.getElementById("PlayerNameTB").value,
         },
     };
