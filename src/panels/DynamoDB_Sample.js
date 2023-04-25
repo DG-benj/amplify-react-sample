@@ -17,14 +17,9 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
-import { DynamoDB } from 'aws-sdk'
 import { useImperativeHandle } from 'react'
 
 const AWS = require('aws-sdk');
-const AWS2 = require('aws-sdk');
-var sns = new AWS.SNS();
-var ddb = new AWS.DynamoDB();
-var ddb2 = process.env.getItem;
 var playerList = [];
 export default function DynamoDB_Sample() {
 
@@ -45,7 +40,7 @@ var docClient = new AWS.DynamoDB.DocumentClient({
   accessKeyId: process.env.REACT_APP_ACCESSKEYID,
   secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
     //for testing credentials
-   // accessKeyId: awsconfig.AccessKey,
+    //accessKeyId: awsconfig.AccessKey,
     //secretAccessKey: awsconfig.SAKey,
   }
 });
