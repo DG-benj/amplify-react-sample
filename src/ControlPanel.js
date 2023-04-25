@@ -17,16 +17,6 @@ export default function ControlPanel() {
     return (
         <Container fluid>
           <Row>
-            <OneShotPanel/>
-            <ProfilePanel/>
-            <TamaPanel/>
-          </Row>
-          <Row>
-            <DaitaisenPanel/>
-            <BSOPanel/>
-            <DasekiPanel/>
-          </Row>
-          <Row>
             <DynamoDB_Sample/>
             <S3_Sample/>
           </Row>
