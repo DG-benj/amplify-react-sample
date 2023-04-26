@@ -154,6 +154,55 @@ function NewSelected(){
   }    
 // #endregion
 
+
+// #region DOWNLOAD FUNCTIONS
+function onDownloadClick(inButton, outButton) {
+  var params = {
+    Bucket: "testingbenj",
+    Key: document.getElementById("s3_LinkTB").value,
+};
+newS3Client.getObject(params, onDownload);
+
+}
+function onDownload(err, data) {
+  if (err) {
+      console.error("Unable to Download the item. Error JSON:", JSON.stringify(err, null, 2));
+      console.log(err);
+  } else {        
+      console.log("getting objectdata succeeded.");
+      console.log(data);
+      var contentypeString = data.ContentType.toString();
+      if(contentypeString.includes("image")){
+        //objects is image
+        console.log("objects is image");
+        var params = {
+          Bucket: "testingbenj",
+          Key: document.getElementById("s3_LinkTB").value,
+      };
+        const downloadUrl =newS3Client.getSignedUrl("getObject", params);
+           console.log("the url is " + downloadUrl);
+          var img = document.createElement('img');
+          img.src = downloadUrl;
+          document.body.appendChild(img);
+      }else if (contentypeString.includes("video")){
+        console.log("objects is video");
+
+      }else if (contentypeString.includes("text")){
+        console.log("objects is text");
+        var params = {
+          Bucket: "testingbenj",
+          Key: document.getElementById("s3_LinkTB").value,
+      };
+        const downloadUrl =newS3Client.getSignedUrl("getObject", params);
+           console.log("the url is " + downloadUrl);
+           var textholder = document.getElementById("TextHolder");
+           textholder.value = downloadUrl;
+        
+      }
+  }
+}
+// #endregion
+
   return (
     
     <Col xs={5} className="control-panel">
@@ -173,7 +222,9 @@ function NewSelected(){
         <S3_BTN
             onGetLinkClick={(getlinkButton, outButton) => onGetLinkClick(getlinkButton, outButton)}
             onOutClick={(getlinkButton, outButton) => onOutClick(getlinkButton, outButton)}
+            onDownloadClick={(downloadButton, outButton) => onDownloadClick(downloadButton, outButton)}
            /> 
+           <input type="text" id ="TextHolder" value=""></input>
     </Col>
   )
 }
