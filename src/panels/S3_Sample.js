@@ -78,6 +78,7 @@ function UpdateListView(data){
    });
 }
 
+// if the list view had a new click 
 function NewSelected(){
   var listview = document.getElementById("ListObjects");
   console.log(objectLists[listview.value].Key + " - " +  objectLists[listview.value].LastModified);
@@ -85,9 +86,9 @@ function NewSelected(){
     document.getElementById("s3_LinkTB").value =  objectLists[listview.value].Key;
 }
 
+// if the list view had a new click 
 function NewSelectedOnListFile(){
   var listview = document.getElementById("NewListFile");
-  console.log(htmlObjectLists[listview.value].PlayerNumber + " - " +  htmlObjectLists[listview.value].PlayerName+ " - " +  htmlObjectLists[listview.value].TeamName);
 
     document.getElementById("NewListTB").value =  htmlObjectLists[listview.value].PlayerNumber + " - " +  htmlObjectLists[listview.value].PlayerName+ " - " +  htmlObjectLists[listview.value].TeamName;
 }
@@ -174,41 +175,39 @@ function onDownload(err, data) {
   } else {        
       console.log("getting objectdata succeeded.");
       console.log(data);
+      // Determines the ContentType of the Object being download
       var contentypeString = data.ContentType.toString();
+      var params = {
+        Bucket: "testingbenj",
+        Key: document.getElementById("s3_LinkTB").value,
+        };
+      const downloadUrl =newS3Client.getSignedUrl("getObject", params);
+      console.log("the download url is " + downloadUrl);
+      //objects is image
       if(contentypeString.includes("image")){
-        //objects is image
         console.log("objects is image");
-        var params = {
-          Bucket: "testingbenj",
-          Key: document.getElementById("s3_LinkTB").value,
-          };
-        const downloadUrl =newS3Client.getSignedUrl("getObject", params);
-          console.log("the url is " + downloadUrl);
+        
           var img = document.createElement('img');
           img.src = downloadUrl;
           document.body.appendChild(img);
       }else if (contentypeString.includes("video")){
+      //objects is Video
         console.log("objects is video");
 
       }else if (contentypeString.includes("text")){
+      //objects is text
         console.log("objects is text");
-        var params = {
-          Bucket: "testingbenj",
-          Key: document.getElementById("s3_LinkTB").value,
-        };
-           const downloadUrl =newS3Client.getSignedUrl("getObject", params);
-           console.log("the url is " + downloadUrl);
 
           if(contentypeString.includes("xml")){
             PopulateListViewWithXML(downloadUrl);
           }else if(contentypeString.includes("plain")){
             PopulateListViewWithTextFile(downloadUrl);
-
           }
       }
   }
 }
 
+// Populate the List view using XML format the Attributes must be manually added for it to be able to correctly add into the array as well as the List view
 function PopulateListViewWithXML(xmlURL){
   var listview = document.getElementById("NewListFile");
   listview.options.length = 0;
@@ -234,6 +233,8 @@ function PopulateListViewWithXML(xmlURL){
 xhr.send(); 
 }
 
+// Populate the List view using the normal text file format of Digidelic using the "-----------" as divider
+// manually add the Attribute and number of divider to correctly place into the list view
 function PopulateListViewWithTextFile(txtFileURL){
   var listview = document.getElementById("NewListFile");
   listview.options.length = 0;
