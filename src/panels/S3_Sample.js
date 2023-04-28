@@ -39,8 +39,8 @@ export default function S3_Sample() {
     accessKeyId: process.env.REACT_APP_ACCESSKEYID,
     secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
       //for testing credentials
-     // accessKeyId: awsconfig.AccessKey,
-     // secretAccessKey: awsconfig.SAKey,
+    // accessKeyId: awsconfig.AccessKey,
+   //  secretAccessKey: awsconfig.SAKey,
     }
   })
 
@@ -213,12 +213,11 @@ function PopulateListViewWithXML(xmlURL){
   var listview = document.getElementById("NewListFile");
   listview.options.length = 0;
   htmlObjectLists = [];
-  var cnt = 0;
   var xhr = new XMLHttpRequest()
   xhr.open('GET', xmlURL)
 
   xhr.onload = (e) => {
-   // console.log(xhr.responseText);
+    console.log(xhr.responseXML);
     var xhrResponse =xhr.responseXML.getElementsByTagName("row") ;
     for( let i=0; i < xhrResponse.length; i++){
       htmlObjectLists.push({
@@ -233,22 +232,34 @@ function PopulateListViewWithXML(xmlURL){
   }
 }
 xhr.send(); 
-
-  
 }
 
 function PopulateListViewWithTextFile(txtFileURL){
+  var listview = document.getElementById("NewListFile");
+  listview.options.length = 0;
+  htmlObjectLists = [];
   var xhr = new XMLHttpRequest()
   xhr.open('GET', txtFileURL)
-
   xhr.onload = (e) => {
-    console.log(xhr.responseText);
-    htmlObjectLists = JSON.parse(xhr.responseText)['Player ID']
-    console.log(htmlObjectLists)
-}
-xhr.send()
-}
+  console.log(xhr.responseText);
+  var itemsArr = xhr.responseText.split('\r\n');
+  for( let i=0; i < itemsArr.length; i +=7){
+    htmlObjectLists.push({
+      PlayerId : itemsArr[i],
+      PlayerName :  itemsArr[i+1],
+      PlayerNumber : itemsArr[i+2],
+      PlayerRecord :  itemsArr[i+3],
+      PlayerWinRate : itemsArr[i+4],
+      TeamName :  itemsArr[i+5]
+    });
+   }
+      for(let j = 0; j < htmlObjectLists.length; j++){
+        listview.options[listview.options.length] = new Option(htmlObjectLists[j].PlayerName, j);
+      }
+  }
+  xhr.send()
 
+}
 // #endregion
 
   return (
