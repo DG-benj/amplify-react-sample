@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-
-//import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
 import S3_BTN from '../components/S3_BTN'
 import ListView from '../components/ListView'
-
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
@@ -14,7 +11,6 @@ import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
 import { Amplify,API, Auth } from 'aws-amplify';
 import awsconfig  from '../aws-exports';
-import { DynamoDB } from 'aws-sdk'
 import { useImperativeHandle } from 'react'
 
 const AWS = require('aws-sdk');
@@ -23,6 +19,7 @@ var ddb = new AWS.DynamoDB();
 var ddb2 = process.env.getItem;
 
 var objectLists = [];
+var htmlObjectLists = [];
 export default function S3_Sample() {
 
 
@@ -86,6 +83,13 @@ function NewSelected(){
   console.log(objectLists[listview.value].Key + " - " +  objectLists[listview.value].LastModified);
 
     document.getElementById("s3_LinkTB").value =  objectLists[listview.value].Key;
+}
+
+function NewSelectedOnListFile(){
+  var listview = document.getElementById("NewListFile");
+  console.log(htmlObjectLists[listview.value].PlayerNumber + " - " +  htmlObjectLists[listview.value].PlayerName+ " - " +  htmlObjectLists[listview.value].TeamName);
+
+    document.getElementById("NewListTB").value =  htmlObjectLists[listview.value].PlayerNumber + " - " +  htmlObjectLists[listview.value].PlayerName+ " - " +  htmlObjectLists[listview.value].TeamName;
 }
 
 // #region GET ONE OBJECT ON S3 BUCKET FUNCTIONS
@@ -154,7 +158,6 @@ function NewSelected(){
   }    
 // #endregion
 
-
 // #region DOWNLOAD FUNCTIONS
 function onDownloadClick(inButton, outButton) {
   var params = {
@@ -178,9 +181,9 @@ function onDownload(err, data) {
         var params = {
           Bucket: "testingbenj",
           Key: document.getElementById("s3_LinkTB").value,
-      };
+          };
         const downloadUrl =newS3Client.getSignedUrl("getObject", params);
-           console.log("the url is " + downloadUrl);
+          console.log("the url is " + downloadUrl);
           var img = document.createElement('img');
           img.src = downloadUrl;
           document.body.appendChild(img);
@@ -192,15 +195,60 @@ function onDownload(err, data) {
         var params = {
           Bucket: "testingbenj",
           Key: document.getElementById("s3_LinkTB").value,
-      };
-        const downloadUrl =newS3Client.getSignedUrl("getObject", params);
+        };
+           const downloadUrl =newS3Client.getSignedUrl("getObject", params);
            console.log("the url is " + downloadUrl);
-           var textholder = document.getElementById("TextHolder");
-           textholder.value = downloadUrl;
-        
+
+          if(contentypeString.includes("xml")){
+            PopulateListViewWithXML(downloadUrl);
+          }else if(contentypeString.includes("plain")){
+            PopulateListViewWithTextFile(downloadUrl);
+
+          }
       }
   }
 }
+
+function PopulateListViewWithXML(xmlURL){
+  var listview = document.getElementById("NewListFile");
+  listview.options.length = 0;
+  htmlObjectLists = [];
+  var cnt = 0;
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', xmlURL)
+
+  xhr.onload = (e) => {
+   // console.log(xhr.responseText);
+    var xhrResponse =xhr.responseXML.getElementsByTagName("row") ;
+    for( let i=0; i < xhrResponse.length; i++){
+      htmlObjectLists.push({
+        PlayerId : xhrResponse[i].getElementsByTagName('PlayerID')[0].childNodes[0].nodeValue,
+        PlayerName : xhrResponse[i].getElementsByTagName('PlayerName')[0].childNodes[0].nodeValue,
+        PlayerNumber : xhrResponse[i].getElementsByTagName('PlayerNumber')[0].childNodes[0].nodeValue,
+        PlayerRecord : xhrResponse[i].getElementsByTagName('PlayerRecord')[0].childNodes[0].nodeValue,
+        PlayerWinRate : xhrResponse[i].getElementsByTagName('PlayerWinRate')[0].childNodes[0].nodeValue,
+        TeamName : xhrResponse[i].getElementsByTagName('TeamName')[0].childNodes[0].nodeValue
+      });
+    listview.options[listview.options.length] = new Option(xhrResponse[i].getElementsByTagName('PlayerName')[0].childNodes[0].nodeValue, i);
+  }
+}
+xhr.send(); 
+
+  
+}
+
+function PopulateListViewWithTextFile(txtFileURL){
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', txtFileURL)
+
+  xhr.onload = (e) => {
+    console.log(xhr.responseText);
+    htmlObjectLists = JSON.parse(xhr.responseText)['Player ID']
+    console.log(htmlObjectLists)
+}
+xhr.send()
+}
+
 // #endregion
 
   return (
@@ -215,7 +263,7 @@ function onDownload(err, data) {
           </>
           
       }
-        <select id="ListObjects"name="Objects" multiple size="4" onChange={NewSelected} >
+        <select id="ListObjects"name="Objects" multiple size="6" onChange={NewSelected} >
 
         </select>
 
@@ -224,7 +272,11 @@ function onDownload(err, data) {
             onOutClick={(getlinkButton, outButton) => onOutClick(getlinkButton, outButton)}
             onDownloadClick={(downloadButton, outButton) => onDownloadClick(downloadButton, outButton)}
            /> 
-           <input type="text" id ="TextHolder" value=""></input>
+         <input id="NewListTB" text=""/> <br></br>
+
+      <select id="NewListFile"name="Objects" multiple size="4" onChange={NewSelectedOnListFile} >
+
+        </select>
     </Col>
   )
 }
