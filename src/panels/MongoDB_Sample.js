@@ -115,13 +115,13 @@ function NewSelectedOnListFile(){
 }
 
 // #region GET ONE OBJECT ON S3 BUCKET FUNCTIONS
-  function onGetLinkClick(inButton, outButton) {
+  function onGetLinkClick(getlinkButton, outButton) {
 
     if(isButtonClicked(outButton)) {
       toggleButtonColor(outButton)
     }
    GetItemsNow();
-    toggleButtonColor(inButton)
+  //  toggleButtonColor(getlinkButton)
     window.document.activeElement.blur()      
   }
  
@@ -186,18 +186,16 @@ function NewSelectedOnListFile(){
       }
   }
 
-  function onOutClick(inButton, outButton) {
+  function onOutClick(getlinkButton, outButton) {
     
-    if(isButtonClicked(inButton)) {
-      toggleButtonColor(inButton)
-    }
+    
     ScanItems();
     window.document.activeElement.blur()
   }    
 // #endregion
 
 // #region DOWNLOAD FUNCTIONS
-function onDownloadClick(inButton, outButton) {
+function onDownloadClick(downloadButton, outButton) {
   var params = {
     Bucket: "testingbenj",
     Key: document.getElementById("s3_LinkTB").value,
