@@ -5,7 +5,7 @@ import CheckboxGroup from '../components/CheckboxGroup'
 import InputText from  '../components/InputText'
 import VertConnectedInput from '../components/VertConnectedInput'
 import LabeledCheckbox from '../components/LabeledCheckbox'
-import DynamoDB_BTN from '../components/SendDynamoDB_BTN'
+import DynamoDBBTN from '../components/SendDynamoDB_BTN'
 import ListView from '../components/ListView'
 
 import Button from 'react-bootstrap/Button'
@@ -284,7 +284,7 @@ function onCreate(err, data) {
 
         </select>
 
-        <DynamoDB_BTN
+        <DynamoDBBTN
             onInClick={(inButton, outButton) => onInClick(inButton, outButton)}
             onOutClick={(inButton, outButton) => onOutClick(inButton, outButton)}
             onDeleteClick={(deleteButton, outButton) => onDeleteClick(deleteButton, outButton)}

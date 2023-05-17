@@ -4,12 +4,11 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 ///props variable
 ///id="id"
-export default function S3_BTN(props) {
+export default function S3_Btn(props) {
 
   const getlinkButton = useRef(null);
   const outButton = useRef(null);
   const downloadButton = useRef(null);
-
 
   return (
     <>

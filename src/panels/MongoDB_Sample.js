@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
+//import mongoDB from 'mongodb'
+//import MongoDb, { MongoClient, ServerApiVersion } from 'mongodb'
 
 import S3Btn from '../components/S3_Btn'
 import ListView from '../components/ListView'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
@@ -14,13 +15,12 @@ import awsconfig  from '../aws-exports';
 import { useImperativeHandle } from 'react'
 
 const AWS = require('aws-sdk');
-var sns = new AWS.SNS();
-var ddb = new AWS.DynamoDB();
-var ddb2 = process.env.getItem;
+//const { MongoClient, ServerApiVersion } = require('mongodb');
+
 
 var objectLists = [];
 var htmlObjectLists = [];
-export default function S3_Sample() {
+export default function MongoDB_Sample() {
 
 
   const [listValue, setListValue] = useState(null)
@@ -32,18 +32,39 @@ export default function S3_Sample() {
   const params1 = {
     TableName :'Website_PlayerData_Sample'
   }
-  var newS3Client = new AWS.S3({
-    region: 'ap-northest-1',
-    credentials:{
-      //for amplify credentials
-    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
-    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
-      //for testing credentials
-    // accessKeyId: awsconfig.AccessKey,
-   //  secretAccessKey: awsconfig.SAKey,
-    }
-  })
+  var url = "mongodb+srv://DG_Benj:NW4iDYhwzVwT3mcI@players.pg7hsx0.mongodb.net/?retryWrites=true&w=majority";
+ /* var mongoClient = new MongoClient(url,
+    {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
+    });*/
+    
+    var dataMongoDB = JSON.stringify({
+      "collection": "PlayerDataBase_Collection",
+      "database": "PlayerDataBase",
+      "dataSource": "Players",
+      "projection": {
+          "_id": 1
+      }
+  });
 
+    var config = {
+      method: 'post',
+      url: 'https://ap-southeast-1.aws.data.mongodb-api.com/app/data-oxrsp/endpoint/data/v1/action/findOne',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'Access-Control-Allow-Origin':'*',
+        'api-key':  process.env.REACT_APP_APIKEY_MONGODB,
+      },
+      data: dataMongoDB
+    };
+ 
+
+  
 useEffect(() => {
   if(options.length !== 0) {
     console.log("0");
@@ -106,11 +127,27 @@ function NewSelectedOnListFile(){
  
 
   function GetItemsNow(){
-      var params = {
+    axios1(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+   /*try{
+   mongoClient.connect();
+   mongoClient.db("admin").command({ ping: 1 });
+   console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    }catch{
+   console.log( "unsuccessfully connected to MongoDB!");
+
+    }
+*/
+     /* var params = {
         Bucket: "testingbenj",
         Key: document.getElementById("s3_LinkTB").value,
     };
-    newS3Client.getObject(params, onGet);
+    newS3Client.getObject(params, onGet);*/
   }
 
   function onGet(err, data) {
@@ -266,7 +303,7 @@ function PopulateListViewWithTextFile(txtFileURL){
   return (
     
     <Col xs={5} className="control-panel">
-        <h5 className='txt-panel-label'>S3_SAMPLE</h5>
+        <h5 className='txt-panel-label'>MongoDB Sample XML FIle</h5>
         {
          <>
          <label for="Link" color='white'>S3 Link:</label>
