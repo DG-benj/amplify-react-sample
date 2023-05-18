@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-//import mongoDB from 'mongodb'
-//import MongoDb, { MongoClient, ServerApiVersion } from 'mongodb'
 
 import S3Btn from '../components/S3_Btn'
 import ListView from '../components/ListView'
@@ -10,9 +8,8 @@ import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
 
-import { Amplify,API, Auth } from 'aws-amplify';
-import awsconfig  from '../aws-exports';
-import { useImperativeHandle } from 'react'
+
+import axios1 from 'axios';
 
 const AWS = require('aws-sdk');
 //const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -84,7 +81,7 @@ function handleListView(data) {
 }
 
 function ListViewData(){
-  ScanItems();
+
 }
 
 function UpdateListView(data){
@@ -162,84 +159,25 @@ function NewSelectedOnListFile(){
 // #endregion
 
 // #region SCAN ALL OBJECTS FROM BUCKET FUNCTIONS
-  
-  async function ScanItems(){
-    const paramsS3 = {
-      Bucket: "testingbenj",
-      
-    }
-    newS3Client.listObjects(paramsS3, onScan);
-  }
-  var count = 0;
+
 
   function onScan(err, data) {
-      if (err) {
-          console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
-          console.log(err);
-      } else {        
-          console.log("Scan succeeded.");
-         // data.Contents.forEach(function(itemdata) {
-           // console.log("Item :", ++count,JSON.stringify(itemdata));
-        // });
-        UpdateListView(data);
-          
-      }
+     
   }
 
   function onOutClick(getlinkButton, outButton) {
     
-    
-    ScanItems();
     window.document.activeElement.blur()
   }    
 // #endregion
 
 // #region DOWNLOAD FUNCTIONS
 function onDownloadClick(downloadButton, outButton) {
-  var params = {
-    Bucket: "testingbenj",
-    Key: document.getElementById("s3_LinkTB").value,
-};
-newS3Client.getObject(params, onDownload);
+
 
 }
 function onDownload(err, data) {
-  if (err) {
-      console.error("Unable to Download the item. Error JSON:", JSON.stringify(err, null, 2));
-      console.log(err);
-  } else {        
-      console.log("getting objectdata succeeded.");
-      console.log(data);
-      // Determines the ContentType of the Object being download
-      var contentypeString = data.ContentType.toString();
-      var params = {
-        Bucket: "testingbenj",
-        Key: document.getElementById("s3_LinkTB").value,
-        };
-      const downloadUrl =newS3Client.getSignedUrl("getObject", params);
-      console.log("the download url is " + downloadUrl);
-      //objects is image
-      if(contentypeString.includes("image")){
-        console.log("objects is image");
-        
-          var img = document.createElement('img');
-          img.src = downloadUrl;
-          document.body.appendChild(img);
-      }else if (contentypeString.includes("video")){
-      //objects is Video
-        console.log("objects is video");
-
-      }else if (contentypeString.includes("text")){
-      //objects is text
-        console.log("objects is text");
-
-          if(contentypeString.includes("xml")){
-            PopulateListViewWithXML(downloadUrl);
-          }else if(contentypeString.includes("plain")){
-            PopulateListViewWithTextFile(downloadUrl);
-          }
-      }
-  }
+ 
 }
 
 // Populate the List view using XML format the Attributes must be manually added for it to be able to correctly add into the array as well as the List view

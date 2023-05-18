@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
-import InOutBtnGroup from '../components/InOutBtnGroup'
-import CheckboxGroup from '../components/CheckboxGroup'
-import InputText from  '../components/InputText'
-import VertConnectedInput from '../components/VertConnectedInput'
-import LabeledCheckbox from '../components/LabeledCheckbox'
 import DynamoDBBTN from '../components/SendDynamoDB_BTN'
 import ListView from '../components/ListView'
 
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
-
 import Col from "react-bootstrap/Col"
-import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
-
-import { Amplify,API, Auth } from 'aws-amplify';
-import awsconfig  from '../aws-exports';
-import { useImperativeHandle } from 'react'
 
 const AWS = require('aws-sdk');
 var playerList = [];
