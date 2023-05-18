@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal'
 import Col from "react-bootstrap/Col"
 import * as PayloadHandler from '../PayloadHandler'
 import { isButtonClicked, toggleButtonColor } from '../DOMHelper'
-
+//import mongodb from 'mongodb'
 
 import axios1 from 'axios';
 
@@ -94,7 +94,7 @@ function UpdateListView(data){
       listview.options[listview.options.length] = new Option(itemdata.Key, cnt);
       cnt++;
    });
-}
+} 
 
 // if the list view had a new click 
 function NewSelected(){
