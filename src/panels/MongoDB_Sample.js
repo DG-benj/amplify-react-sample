@@ -55,6 +55,8 @@ export default function MongoDB_Sample() {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
         'Access-Control-Allow-Origin':'*',
+        "Access-Control-Allow-Headers" : "Content-Type,Authorization",
+        "Access-Control-Allow-Methods" : "GET, POST, PUT, DELETE, OPTIONS",
         'api-key':  process.env.REACT_APP_APIKEY_MONGODB,
       },
       data: dataMongoDB
@@ -123,7 +125,7 @@ function NewSelectedOnListFile(){
   }
  
 
-  function GetItemsNow(){
+  function GetItemsNow(){ 
     axios1(config)
     .then(function (response) {
         console.log(JSON.stringify(response.data));
